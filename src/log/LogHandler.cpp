@@ -8,10 +8,10 @@ void RAClog::FileLogHandler::CreateFileLog(const std::string& fileSuffix)
     if (!oFileStream.is_open())
     {
 	std::stringstream fileStream;
-	oFileStream.open(fileStream.str());
 
 	fileStream << "log/" << RACtime::TimeHandler::GetTime() << "_" << fileSuffix;
 
+	oFileStream.open(fileStream.str());
 	try
 	{
 	    oFileStream.exceptions(oFileStream.failbit);

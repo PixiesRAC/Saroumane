@@ -24,7 +24,7 @@ namespace RACtime
 	    auto tm = *std::localtime(&t);
 
 	    std::stringstream oss;
-	    oss << std::put_time(&tm, "%d-%m-%Y_%H-%M-%S");
+	    oss << std::put_time(&tm, "%d-%m-%Y_%H-%M-%S-%s");
 	    return oss.str();
 	}
     };

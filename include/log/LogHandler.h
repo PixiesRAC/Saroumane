@@ -27,10 +27,20 @@ namespace RAClog
     class	FileLogHandler
     {
 
-	public:
+	    FileLogHandler(const FileLogHandler&) = delete;
+	    FileLogHandler(const FileLogHandler&&) = delete;
+	    const FileLogHandler& operator=(const FileLogHandler&) = delete;
+	    const FileLogHandler&& operator=(const FileLogHandler&&) = delete;
 
-	    void			CreateFileLog(const std::string& fileSuffix);
+	private:
+
+	    FileLogHandler();
+	    ~FileLogHandler();
+
+	    void			CreateFileLog();
 	    void			CloseFileLog();
+
+	public:
 
 	    static FileLogHandler	*CreateInstance()
 	    {
@@ -44,11 +54,6 @@ namespace RAClog
 	    {
 		if (pInstance)
 		{
-		    if (oFileStream.is_open())
-		    {
-			LOG(WARN, "You should Close the Log File with the function CloseFileLog before");
-			return ;
-		    }
 		    delete pInstance;	
 		}
 	    }
@@ -56,6 +61,7 @@ namespace RAClog
 	private :
 
 	    static FileLogHandler	*pInstance;
+	    const   char		*pFileLogSuffix = "RacRenifleurDuXul";
 
 	public:
 

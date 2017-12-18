@@ -8,21 +8,15 @@
 #if LOG_UNIT_TEST == 0
 
 #define LOGINFO(msg) RAClog::FileLogHandler::oFileStream << "[ INFO ] " << " [msg]: " <<  msg << "\n"; 
-
 #define LOGWARN(msg) RAClog::FileLogHandler::oFileStream << "[ WARN ] " << __FUNCTION__ << " [msg]: " <<  msg << "\n";
-
 #define LOGDEBUG(msg)
-
 #define LOGERROR(msg)
 
 #else
 
 #define LOGINFO(msg) "[ INFO ] "
-
 #define LOGWARN(msg) "[ WARN ] "
-
 #define LOGDEBUG(msg) "[ DEBUG ] "
-
 #define LOGERROR(msg)
 
 #endif
@@ -30,7 +24,6 @@
 
 namespace RAClog
 {
-
     class	FileLogHandler
     {
 
@@ -38,7 +31,6 @@ namespace RAClog
 
 	    void			CreateFileLog(const std::string& fileSuffix);
 	    void			CloseFileLog();
-
 
 	    static FileLogHandler	*CreateInstance()
 	    {
@@ -68,6 +60,5 @@ namespace RAClog
 	public:
 
 	    static std::ofstream    	oFileStream;
-
     };
 }

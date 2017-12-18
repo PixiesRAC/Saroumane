@@ -11,7 +11,6 @@ namespace RACtime
 	TimeHandler(const TimeHandler&&) = delete;
 	TimeHandler&& operator=(const TimeHandler&&) = delete;
 
-
 	public :
 
 	static const std::string GetTime()

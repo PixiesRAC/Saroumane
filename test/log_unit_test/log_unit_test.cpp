@@ -1,8 +1,7 @@
 #include "gtest/gtest.h"
+#include "LogHandler.h"
 
 #define LOG_UNIT_TEST 1
-
-#include "LogHandler.h"
 
 TEST(sample_test_case, sample_test)
 {

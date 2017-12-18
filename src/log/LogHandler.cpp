@@ -5,7 +5,6 @@
 
 void RAClog::FileLogHandler::CreateFileLog(const std::string& fileSuffix)
 {
-
     if (!oFileStream.is_open())
     {
 	std::stringstream fileStream;

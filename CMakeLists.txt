@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.6)
-project(RAC_Renifleur)
+project(RAC_RenifleurDuXul)
 set (CMAKE_CXX_STANDARD 11)
 
 set(gtest_SOURCE_DIR, third_party/googletest/googletest/include/)
@@ -37,7 +37,7 @@ set(EXECUTABLE_OUTPUT_PATH bin)
 
     add_executable(
 
-	    RAC_Renifleur
+	    RAC_RenifleurDuXul
 
 	    main.cpp
 

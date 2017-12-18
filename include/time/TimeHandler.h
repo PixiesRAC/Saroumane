@@ -1,9 +1,9 @@
 #pragma once
 
-#include <iostream>
-#include <iomanip>
-#include <ctime>
 #include <sstream>
+#include <sys/time.h>
+
+#define SIZE_ISO8601_WITH_MILI 25
 
 namespace RACtime
 {
@@ -20,12 +20,16 @@ namespace RACtime
 
 	static const std::string GetTime()
 	{
-	    auto t = std::time(nullptr);
-	    auto tm = *std::localtime(&t);
+	    std::stringstream ss;
 
-	    std::stringstream oss;
-	    oss << std::put_time(&tm, "%d-%m-%Y_%H-%M-%S-%s");
-	    return oss.str();
+	    timeval curTime;
+	    gettimeofday(&curTime, NULL);
+	    int milli = curTime.tv_usec / 1000;
+
+	    char buffer [SIZE_ISO8601_WITH_MILI] = "";
+	    strftime(buffer, sizeof(buffer), "%Y-%m-%dT%H:%M:%S", localtime(&curTime.tv_sec)); // ISO 8601
+	    ss << buffer << "." << milli;
+	    return ss.str();
 	}
     };
 }

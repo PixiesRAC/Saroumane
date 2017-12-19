@@ -3,13 +3,23 @@
 #include "LogHandler.h"
 #include "TimeHandler.h"
 
-void RAClog::FileLogHandler::CreateFileLog(const std::string& fileSuffix)
+RAClog::FileLogHandler::FileLogHandler()
+{
+    this->CreateFileLog();
+}
+
+RAClog::FileLogHandler::~FileLogHandler()
+{
+    this->CloseFileLog();
+}
+
+void RAClog::FileLogHandler::CreateFileLog()
 {
     if (!oFileStream.is_open())
     {
 	std::stringstream fileStream;
 
-	fileStream << "log/" << RACtime::TimeHandler::GetTime() << "_" << fileSuffix;
+	fileStream << "log/" << RACtime::TimeHandler::GetTime() << "_" << pFileLogSuffix;
 
 	oFileStream.open(fileStream.str());
 	try

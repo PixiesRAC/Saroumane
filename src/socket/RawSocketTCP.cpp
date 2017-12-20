@@ -1,21 +1,57 @@
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <errno.h>
+#include <string.h>
+#include <unistd.h>
+
 #include "RawSocketTCP.h"
 #include "LogHandler.h"
 
-RACsocket::RawSocketTCP::RawSocketTCP()
+namespace RACsocket
 {
-    this->open();
-    LOG(INFO, "Creation of Raw Socket TCP");
-}
+    RawSocketTCP::RawSocketTCP()
+    {
+	CreateSocket(); 
+	if (!oRawSocketTCPError.IsErrorFromRawSocketTCP())
+	{
+	    LOG(INFO, "Creation of the RAW SOCKET TCP");
+	}
+    }
 
-RACsocket::RawSocketTCP::~RawSocketTCP()
-{
-    this->close();
-}
+    RawSocketTCP::~RawSocketTCP()
+    {
+	CloseSocket();
 
-int RACsocket::RawSocketTCP::open()
-{
-}
+    }
 
-int RACsocket::RawSocketTCP::close()
-{
+    int RawSocketTCP::CreateSocket()
+    {
+	fd = socket(PF_INET, SOCK_RAW, IPPROTO_TCP);
+	if (!fd)
+	{
+	    oRawSocketTCPError.setAndLogErrorFromRawSocketTCP(true);
+	}
+    }
+
+    int RawSocketTCP::CloseSocket()
+    {
+	close(fd);
+    }
+
+    const char	*RawSocketTCP::RawSocketTCPError::GetErrorFromErno()
+    {
+	return  strerror(errno);
+    }
+
+    bool	RawSocketTCP::RawSocketTCPError::IsErrorFromRawSocketTCP()
+    {
+	return  bErrFromRawSocketTCP;
+    }
+
+    void	RawSocketTCP::RawSocketTCPError::setAndLogErrorFromRawSocketTCP(bool bFlag)
+    {
+	LOG(ERROR, GetErrorFromErno());
+	bErrFromRawSocketTCP = true;
+    }
 }

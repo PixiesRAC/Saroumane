@@ -6,13 +6,12 @@ namespace RACsocket
     {
 	public :
 	    IRawSocket() = default;
-	    virtual    ~IRawSocket() = default;
-
+	    virtual    ~IRawSocket() = default; 
 
 	protected :
 
-	    virtual int open() = 0;
-	    virtual int close() = 0;
+	    virtual int CreateSocket() = 0;
+	    virtual int CloseSocket() = 0;
 
 	    int fd;
     };

@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.6)
 project(RAC_RenifleurDuXul)
-set (CMAKE_CXX_STANDARD 11)
+set (CMAKE_CXX_STANDARD 14)
 
 set(gtest_SOURCE_DIR, third_party/googletest/googletest/include/)
 set(SRC_LOG_TEST_DIRECTORY "test/log_unit_test")
@@ -32,8 +32,8 @@ add_test( runUnitTests runUnitTests )
 
 set(INCLUDE_LOG_DIRECTORY "include/log/")
 set(INCLUDE_TIME_DIRECTORY "include/time/")
+set(INCLUDE_SOCKET_DIRECTORY "include/socket/")
 set(EXECUTABLE_OUTPUT_PATH bin)
-
 
     add_executable(
 
@@ -46,6 +46,10 @@ set(EXECUTABLE_OUTPUT_PATH bin)
 	    include/log/LogInstanceInitializer.h
 
 	    include/time/TimeHandler.h
+
+	    src/socket/RawSocketTCP.cpp
+	    include/socket/IRawSocket.h
+	    include/socket/RawSocketTCP.h
 	    )
 
-include_directories(${INCLUDE_LOG_DIRECTORY} ${gtest_SOURCE_DIR} ${INCLUDE_TIME_DIRECTORY})
+include_directories(${INCLUDE_LOG_DIRECTORY} ${gtest_SOURCE_DIR} ${INCLUDE_TIME_DIRECTORY} ${INCLUDE_SOCKET_DIRECTORY})

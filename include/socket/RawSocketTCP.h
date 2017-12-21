@@ -1,11 +1,11 @@
 #pragma once
 
-#include "IRawSocket.h"
+#include "ISocket.h"
 #include "JsonConfHandler.h"
 
 namespace RACsocket
 {
-    class RawSocketTCP : public IRawSocket
+    class RawSocketTCP : public ISocket
     {
 	using jsonConf = RACconf::JsonConfHandler;
 
@@ -23,11 +23,11 @@ namespace RACsocket
 	    void	Config();
 
 
-	    class  RawSocketTCPError
+	    class  Error
 	    {
 		public :
 
-		    RawSocketTCPError() : bErrFromRawSocketTCP(false)
+			Error() : bErr(false)
 		{
 		}
 
@@ -38,17 +38,17 @@ namespace RACsocket
 		public :
 
 		    bool        IsErrorFromRawSocketTCP();
-		    void	setAndLogErrorFromRawSocketTCP(bool bFlag);
+		    void	setErrorStateAndLogErrorMsg(bool bFlag);
 
 		private :
 
-		    bool	  bErrFromRawSocketTCP;
+		    bool	  bErr;
 
 	    };
 
 	private :
 
-	    RawSocketTCPError		oRawSocketTCPError;
+	    Error	    		oRawSocketTCPError;
 	    int				iPort;
     };
 }

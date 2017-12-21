@@ -31,7 +31,7 @@ namespace RACsocket
 	fd = socket(PF_INET, SOCK_RAW, IPPROTO_TCP);
 	if (fd == -1)
 	{
-	    oRawSocketTCPError.setAndLogErrorFromRawSocketTCP(true);
+	    oRawSocketTCPError.setErrorStateAndLogErrorMsg(true);
 	}
     }
 
@@ -53,19 +53,19 @@ namespace RACsocket
 	LOG(DEBUG, spJsonConf->GetValueFromConfigFile<std::string>("ip", "127.0.0.1"));
     }
 
-    const char	*RawSocketTCP::RawSocketTCPError::GetErrorFromErno()
+    const char	*RawSocketTCP::Error::GetErrorFromErno()
     {
 	return  strerror(errno);
     }
 
-    bool	RawSocketTCP::RawSocketTCPError::IsErrorFromRawSocketTCP()
+    bool	RawSocketTCP::Error::IsErrorFromRawSocketTCP()
     {
-	return  bErrFromRawSocketTCP;
+	return  bErr;
     }
 
-    void	RawSocketTCP::RawSocketTCPError::setAndLogErrorFromRawSocketTCP(bool bFlag)
+    void	RawSocketTCP::Error::setErrorStateAndLogErrorMsg(bool bFlag)
     {
 	LOG(ERROR, GetErrorFromErno());
-	bErrFromRawSocketTCP = true;
+	bErr = true;
     }
 }

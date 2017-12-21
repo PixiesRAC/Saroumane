@@ -2,11 +2,11 @@
 
 namespace RACsocket
 {
-    class IRawSocket
+    class ISocket
     {
 	public :
-	    IRawSocket() = default;
-	    virtual    ~IRawSocket() = default; 
+	    ISocket() = default;
+	    virtual    ~ISocket() = default; 
 
 	protected :
 

@@ -59,7 +59,7 @@ set(EXECUTABLE_OUTPUT_PATH bin)
 	    include/time/TimeHandler.h
 
 	    src/socket/RawSocketTCP.cpp
-	    include/socket/IRawSocket.h
+	    include/socket/ISocket.h
 	    include/socket/RawSocketTCP.h
 
 	    src/conf/JsonConfHandler.cpp

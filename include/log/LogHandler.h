@@ -2,15 +2,16 @@
 #pragma once
 
 #include <fstream>
+#include "TimeHandler.h"
 
 #define LOG(level, msg)	LOG##level(msg)
 
 #if LOG_UNIT_TEST == 0
 
-#define LOGINFO(msg) RAClog::FileLogHandler::oFileStream << "[ INFO ] " << " [msg]: " <<  msg << "\n"; 
-#define LOGWARN(msg) RAClog::FileLogHandler::oFileStream << "[ WARN ] " << __FUNCTION__ << " [msg]: " <<  msg << "\n";
-#define LOGDEBUG(msg) RAClog::FileLogHandler::oFileStream << "[ DEBUG ] " << __FILE__ << ":" << __LINE__ << "/" << __FUNCTION__ << " [msg]: " << msg << "\n";
-#define LOGERROR(msg) RAClog::FileLogHandler::oFileStream << "[ ERROR ] " << __FUNCTION__ << " [msg]: " <<  msg << "\n"
+#define LOGINFO(msg) RAClog::FileLogHandler::oFileStream << RACtime::TimeHandler::GetTime() << " [ INFO ] " << " [msg]: " <<  msg << "\n";
+#define LOGWARN(msg) RAClog::FileLogHandler::oFileStream << RACtime::TimeHandler::GetTime() << " [ WARN ] " << __FUNCTION__ << " [msg]: " <<  msg << "\n";
+#define LOGDEBUG(msg) RAClog::FileLogHandler::oFileStream << RACtime::TimeHandler::GetTime() << " [ DEBUG ] " << __FILE__ << ":" << __LINE__ << "/" << __FUNCTION__ << " [msg]: " << msg << "\n";
+#define LOGERROR(msg) RAClog::FileLogHandler::oFileStream << RACtime::TimeHandler::GetTime() << " [ ERROR ] " << __FUNCTION__ << " [msg]: " <<  msg << "\n"
 
 #else
 

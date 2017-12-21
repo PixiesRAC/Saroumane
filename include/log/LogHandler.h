@@ -9,8 +9,8 @@
 
 #define LOGINFO(msg) RAClog::FileLogHandler::oFileStream << "[ INFO ] " << " [msg]: " <<  msg << "\n"; 
 #define LOGWARN(msg) RAClog::FileLogHandler::oFileStream << "[ WARN ] " << __FUNCTION__ << " [msg]: " <<  msg << "\n";
-#define LOGDEBUG(msg)
-#define LOGERROR(msg)
+#define LOGDEBUG(msg) RAClog::FileLogHandler::oFileStream << "[ DEBUG ] " << __FILE__ << ":" << __LINE__ << "/" << __FUNCTION__ << " [msg]: " << msg << "\n";
+#define LOGERROR(msg) RAClog::FileLogHandler::oFileStream << "[ ERROR ] " << __FUNCTION__ << " [msg]: " <<  msg << "\n"
 
 #else
 
@@ -42,12 +42,13 @@ namespace RAClog
 
 	public:
 
-	    static FileLogHandler	*CreateInstance()
+	    static FileLogHandler	*GetOrCreateInstance()
 	    {
 		if (!pInstance)
 		{
 		    pInstance = new FileLogHandler;
 		}
+		return pInstance;
 	    }
 
 	    static void		DeleteInstance()

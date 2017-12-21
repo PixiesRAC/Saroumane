@@ -1,20 +1,27 @@
 #pragma once
 
 #include "IRawSocket.h"
+#include "JsonConfHandler.h"
 
 namespace RACsocket
 {
     class RawSocketTCP : public IRawSocket
     {
+	using jsonConf = RACconf::JsonConfHandler;
+
 	public:
 
-	    RawSocketTCP();
-	    ~RawSocketTCP();
+		    RawSocketTCP();
+	   virtual ~RawSocketTCP();
 
 	private :
 
-	    virtual int CreateSocket();
-	    virtual int CloseSocket();
+	    virtual int CreateSocket() override final;
+	    virtual int CloseSocket() override final;
+	    virtual int	BindSocket() override final;
+
+	    void	Config();
+
 
 	    class  RawSocketTCPError
 	    {
@@ -41,6 +48,7 @@ namespace RACsocket
 
 	private :
 
-	    RawSocketTCPError   oRawSocketTCPError;
+	    RawSocketTCPError		oRawSocketTCPError;
+	    int				iPort;
     };
 }

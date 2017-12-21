@@ -12,6 +12,7 @@ namespace RACsocket
 
 	    virtual int CreateSocket() = 0;
 	    virtual int CloseSocket() = 0;
+	    virtual int	BindSocket() = 0;
 
 	    int fd;
     };

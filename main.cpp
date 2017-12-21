@@ -4,7 +4,7 @@
 
 int main()
 {
-    RAClog::FileLogHandler *log =  RAClog::FileLogHandler::CreateInstance();
+    RAClog::FileLogHandler *log =  RAClog::FileLogHandler::GetOrCreateInstance();
 
     LOG(INFO, "VOICI" << "UN" << "TEST");
     std::unique_ptr<RACsocket::IRawSocket> socket = std::make_unique<RACsocket::RawSocketTCP>();

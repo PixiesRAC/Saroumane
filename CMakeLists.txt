@@ -18,7 +18,7 @@ include_directories(${gtest_SOURCE_DIR})
 ################################
 
 # Add test cpp file
-add_executable( runUnitTests test/log_unit_test/log_unit_test.cpp )
+add_executable( runUnitTests test/log_unit_test/log_unit_test.cpp test/conf_unit_test/conf_unit_test.cpp src/conf/JsonConfHandler.cpp)
 
 # Link test executable against gtest & gtest_main
 target_link_libraries(runUnitTests gtest gtest_main)
@@ -30,9 +30,20 @@ add_test( runUnitTests runUnitTests )
 ################################
 
 
+################################
+# Json Boost
+################################
+
+set(INCLUDE_JSONBOOST_DIR, third_party/property_tree/include/)
+
+################################
+# END Json Boost
+################################
+
 set(INCLUDE_LOG_DIRECTORY "include/log/")
 set(INCLUDE_TIME_DIRECTORY "include/time/")
 set(INCLUDE_SOCKET_DIRECTORY "include/socket/")
+set(INCLUDE_CONF_DIRECTORY "include/conf/")
 set(EXECUTABLE_OUTPUT_PATH bin)
 
     add_executable(
@@ -50,6 +61,11 @@ set(EXECUTABLE_OUTPUT_PATH bin)
 	    src/socket/RawSocketTCP.cpp
 	    include/socket/IRawSocket.h
 	    include/socket/RawSocketTCP.h
+
+	    src/conf/JsonConfHandler.cpp
+	    include/conf/JsonConfHandler.h
+	    include/conf/JsonConfInstanceInitializer.h
 	    )
 
-include_directories(${INCLUDE_LOG_DIRECTORY} ${gtest_SOURCE_DIR} ${INCLUDE_TIME_DIRECTORY} ${INCLUDE_SOCKET_DIRECTORY})
+include_directories(${INCLUDE_LOG_DIRECTORY} ${gtest_SOURCE_DIR} ${INCLUDE_TIME_DIRECTORY} 
+		    ${INCLUDE_SOCKET_DIRECTORY} ${INCLUDE_CONF_DIRECTORY} ${INCLUDE_JSONBOOST_DIR} )

@@ -2,6 +2,7 @@
 
 #include "ISocket.h"
 #include "JsonConfHandler.h"
+#include "ErrorSocket.h"
 
 namespace RACsocket
 {
@@ -14,35 +15,32 @@ namespace RACsocket
 		    RawSocketTCP();
 	   virtual ~RawSocketTCP();
 
+	    virtual int	Bind() override final;
+
 	private :
 
 	    virtual int CreateSocket() override final;
 	    virtual int CloseSocket() override final;
-	    virtual int	BindSocket() override final;
 
 	    void	Config();
 
+	public :
 
-	    class  Error
+	    class  Error : public RACerror::ErrorSocket
 	    {
 		public :
 
-			Error() : bErr(false)
+			Error()
 		{
+		    bErr = false;
 		}
-
-		private :
-
-		    const char    *GetErrorFromErno();
 
 		public :
 
-		    bool        IsErrorFromRawSocketTCP();
-		    void	setErrorStateAndLogErrorMsg(bool bFlag);
+		    bool	IsErrorFromRawSocketTCP() const;
 
-		private :
-
-		    bool	  bErr;
+		    void	SetErrorStateAndLogErrorFromErno(bool bErrorFlag);
+		    void	SetErrorStateAndLogOwnError(bool bErrorFlag, const char* pErrMsg);
 
 	    };
 
@@ -50,5 +48,7 @@ namespace RACsocket
 
 	    Error	    		oRawSocketTCPError;
 	    int				iPort;
+	    std::string			sIp;
+	    std::string			sInterface;
     };
 }

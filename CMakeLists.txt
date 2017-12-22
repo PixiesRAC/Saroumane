@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.6)
 project(RAC_RenifleurDuXul)
 set (CMAKE_CXX_STANDARD 14)
+add_definitions( "-Wall -pedantic -W" )
 
 set(gtest_SOURCE_DIR, third_party/googletest/googletest/include/)
 set(SRC_LOG_TEST_DIRECTORY "test/log_unit_test")
@@ -44,6 +45,7 @@ set(INCLUDE_LOG_DIRECTORY "include/log/")
 set(INCLUDE_TIME_DIRECTORY "include/time/")
 set(INCLUDE_SOCKET_DIRECTORY "include/socket/")
 set(INCLUDE_CONF_DIRECTORY "include/conf/")
+set(INCLUDE_ERROR_DIRECTORY "include/error/")
 set(EXECUTABLE_OUTPUT_PATH bin)
 
     add_executable(
@@ -65,7 +67,15 @@ set(EXECUTABLE_OUTPUT_PATH bin)
 	    src/conf/JsonConfHandler.cpp
 	    include/conf/JsonConfHandler.h
 	    include/conf/JsonConfInstanceInitializer.h
+
+	    src/socket/RawSocketListener.cpp
+	    include/socket/ISocketListener.h
+	    include/socket/RawSocketListener.h
+
+	    src/error/ErrorSocket.cpp
+	    include/error/ErrorSocket.h
 	    )
 
 include_directories(${INCLUDE_LOG_DIRECTORY} ${gtest_SOURCE_DIR} ${INCLUDE_TIME_DIRECTORY} 
-		    ${INCLUDE_SOCKET_DIRECTORY} ${INCLUDE_CONF_DIRECTORY} ${INCLUDE_JSONBOOST_DIR} )
+		    ${INCLUDE_SOCKET_DIRECTORY} ${INCLUDE_CONF_DIRECTORY} ${INCLUDE_JSONBOOST_DIR} ${INCLUDE_ERROR_DIRECTORY} )
+

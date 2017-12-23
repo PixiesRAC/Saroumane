@@ -24,20 +24,11 @@ namespace RACsocket
 
 	    void	Config();
 
-	public :
+	private :
 
 	    class  Error : public RACerror::ErrorSocket
 	    {
 		public :
-
-			Error()
-		{
-		    bErr = false;
-		}
-
-		public :
-
-		    bool	IsErrorFromRawSocketTCP() const;
 
 		    void	SetErrorStateAndLogErrorFromErno(bool bErrorFlag);
 		    void	SetErrorStateAndLogOwnError(bool bErrorFlag, const char* pErrMsg);

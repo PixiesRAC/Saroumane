@@ -46,6 +46,7 @@ set(INCLUDE_TIME_DIRECTORY "include/time/")
 set(INCLUDE_SOCKET_DIRECTORY "include/socket/")
 set(INCLUDE_CONF_DIRECTORY "include/conf/")
 set(INCLUDE_ERROR_DIRECTORY "include/error/")
+set(INCLUDE_DATA_DIRECTORY "include/data/")
 set(EXECUTABLE_OUTPUT_PATH bin)
 
     add_executable(
@@ -68,14 +69,26 @@ set(EXECUTABLE_OUTPUT_PATH bin)
 	    include/conf/JsonConfHandler.h
 	    include/conf/JsonConfInstanceInitializer.h
 
+	    src/socket/RawSocketProducer.cpp
 	    src/socket/RawSocketListener.cpp
-	    include/socket/ISocketListener.h
+	    include/socket/RawSocketProducer.h
 	    include/socket/RawSocketListener.h
 
 	    src/error/ErrorSocket.cpp
 	    include/error/ErrorSocket.h
+
+	    include/data/PacketData.h
+	    include/data/RawDataInstanceInitializer.h
+
+	    include/socket/RawSocketConsumer.h
+	    src/socket/RawSocketConsumer.cpp
+
 	    )
 
+TARGET_LINK_LIBRARIES( RAC_RenifleurDuXul
+pthread
+)
 include_directories(${INCLUDE_LOG_DIRECTORY} ${gtest_SOURCE_DIR} ${INCLUDE_TIME_DIRECTORY} 
-		    ${INCLUDE_SOCKET_DIRECTORY} ${INCLUDE_CONF_DIRECTORY} ${INCLUDE_JSONBOOST_DIR} ${INCLUDE_ERROR_DIRECTORY} )
+		    ${INCLUDE_SOCKET_DIRECTORY} ${INCLUDE_CONF_DIRECTORY} ${INCLUDE_JSONBOOST_DIR} ${INCLUDE_ERROR_DIRECTORY} ${INCLUDE_DATA_DIRECTORY} )
+
 

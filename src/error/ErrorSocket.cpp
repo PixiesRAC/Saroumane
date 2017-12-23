@@ -21,8 +21,13 @@ namespace RACerror
 	LOG(ERROR, GetErrorFromErno());
     }
 
-    void        ErrorSocket::SetOwnErrorLog(const char* pErrMsg) const
+    void        ErrorSocket::LogOwnError(const char* pErrMsg) const
     {
 	LOG(ERROR, pErrMsg);
+    }
+
+    bool        ErrorSocket::IsError() const
+    {
+	return bErr;
     }
 }

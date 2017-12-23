@@ -1,19 +1,23 @@
 #pragma once
 
-#include "ISocketListener.h"
+#include <tuple>
+#include "ErrorSocket.h"
 
 namespace RAClistener
 {
-    class	RawSocketListener : public ISocketListener
+    class	RawSocketListener
     {
-	public:
+	protected:
 
 	    RawSocketListener() = delete;
 	    RawSocketListener(int fd);
-	    virtual ~RawSocketListener();
+	    ~RawSocketListener() = default;
 
-	private :
+	    std::tuple<const char*, int>    ReadSocket() const;
 
-	    virtual int ReadFromSocket() override final;
+	    static const constexpr int	    iMaxIpPacketSize = 65535;
+	    int				    fd; 
+
+	    RACerror::ErrorSocket            oRawSocketListenerError;
     };
 }

@@ -1,14 +1,25 @@
 #include "LogInstanceInitializer.h"
+#include "RawDataInstanceInitializer.h"
 #include "RawSocketTCP.h"
-#include "RawSocketListener.h"
+#include "RawSocketProducer.h"
+#include "RawSocketConsumer.h"
 #include <memory>
+#include <thread>
 
 int main()
 {
-    RAClog::FileLogHandler *log =  RAClog::FileLogHandler::GetOrCreateInstance();
+    std::unique_ptr<RAClog::FileLogHandler> log(RAClog::FileLogHandler::GetOrCreateInstance());
     std::unique_ptr<RACsocket::ISocket> socket = std::make_unique<RACsocket::RawSocketTCP>();
-    socket->Bind();
-    std::unique_ptr<RAClistener::ISocketListener> listener = std::make_unique<RAClistener::RawSocketListener>(socket->GetSocketfd());
-    RAClog::FileLogHandler::DeleteInstance();
+
+    RACproducer::RawSocketProducer  producer(socket->GetSocketfd());
+    RACconsumer::RawSocketConsumer  consumer;
+
+
+    std::thread tConsumer(&RACconsumer::RawSocketConsumer::ConsumeQueueAndDecode, consumer);
+    std::thread tProducer(&RACproducer::RawSocketProducer::ListenRawDataAndFillQueue, producer);
+
+
+    tProducer.join();
+    tConsumer.join();
     return 0;
 }

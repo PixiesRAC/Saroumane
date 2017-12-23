@@ -15,7 +15,7 @@ namespace RACsocket
     {
 	Config();
 	CreateSocket(); 
-	if (!oRawSocketTCPError.IsErrorFromRawSocketTCP())
+	if (!oRawSocketTCPError.IsError())
 	{
 	    LOG(INFO, "Raw Socket Tcp Creation : DONE SUCCESS");
 	}
@@ -77,11 +77,6 @@ namespace RACsocket
 	}
     }
 
-    bool	RawSocketTCP::Error::IsErrorFromRawSocketTCP() const
-    {
-	return bErr;
-    }
-
     void        RawSocketTCP::Error::SetErrorStateAndLogErrorFromErno(bool bErrorFlag)
     {
 	SetErrorState(bErrorFlag);
@@ -91,7 +86,7 @@ namespace RACsocket
     void	RawSocketTCP::Error::SetErrorStateAndLogOwnError(bool bErrorFlag, const char* pErrMsg)
     {
 	SetErrorState(bErrorFlag);
-	SetOwnErrorLog(pErrMsg);
+	LogOwnError(pErrMsg);
     }
 
 

@@ -27,21 +27,21 @@ namespace RAClog
 {
     class	FileLogHandler
     {
+	private :
 
 	    FileLogHandler(const FileLogHandler&) = delete;
 	    FileLogHandler(const FileLogHandler&&) = delete;
 	    const FileLogHandler& operator=(const FileLogHandler&) = delete;
 	    const FileLogHandler&& operator=(const FileLogHandler&&) = delete;
 
-	private:
-
 	    FileLogHandler();
-	    ~FileLogHandler();
 
 	    void			CreateFileLog();
 	    void			CloseFileLog();
 
 	public:
+
+	    ~FileLogHandler();
 
 	    static FileLogHandler	*GetOrCreateInstance()
 	    {
@@ -52,13 +52,14 @@ namespace RAClog
 		return pInstance;
 	    }
 
-	    static void		DeleteInstance()
+	    static void         DeleteInstance()
 	    {
 		if (pInstance)
 		{
-		    delete pInstance;	
+		    delete pInstance;
 		}
 	    }
+
 
 	private :
 

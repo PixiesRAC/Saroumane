@@ -3,36 +3,40 @@
 #include <netinet/in.h>
 #include <strings.h>
 #include <iostream>
-       #include <unistd.h>
-
-
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 namespace RAClistener
 {
     RawSocketListener::RawSocketListener(int fd)
     {
-	ISocketListener::fd = fd;
-	std::cout << this->fd << std::endl;
-	ReadFromSocket();
+
+	struct stat statbuf;
+	fstat(fd, &statbuf);
+	this->fd = fd;
+
+	if (S_ISSOCK(statbuf.st_mode) != 1)
+	{
+	    oRawSocketListenerError.LogOwnError("Error bad mode file descriptor");
+	    oRawSocketListenerError.SetErrorState(true);
+	}
     }
 
-    RawSocketListener::~RawSocketListener()
+    std::tuple<const char*, int>	RawSocketListener::ReadSocket() const
     {
 
-    }
-
-    int    RawSocketListener::ReadFromSocket()
-    {
-	char	buffer[65000];
+	char	buffer[iMaxIpPacketSize];
+	int	iDataRead = 0;
 
 	bzero(&buffer, sizeof(buffer));
-	struct sockaddr saddr;
-	int saddr_len = sizeof (saddr);
 
-	while (1)
-    	{
-	    int i = recvfrom(fd,buffer,65536,0,&saddr,(socklen_t *)&saddr_len);
-//	    write(1, buffer, i);
+	iDataRead = recv(fd, buffer, iMaxIpPacketSize, 0);
+	if (iDataRead < 0)
+	{
+	    oRawSocketListenerError.LogErrorFromErno();
 	}
+	return  std::make_tuple(buffer, iDataRead);
     }
 }

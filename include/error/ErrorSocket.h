@@ -4,16 +4,22 @@ namespace RACerror
 {
     class ErrorSocket
     {
-	protected :
+	public :
 
-	    ErrorSocket() = default;
+	    ErrorSocket()
+	    {
+		bErr = false;
+	    }
 	    ~ErrorSocket() = default;
 
 	    const char		*GetErrorFromErno() const;
 
 	    void		SetErrorState(bool bErrorFlag);
 	    void		LogErrorFromErno() const;
-	    void		SetOwnErrorLog(const char* pErrMsg) const;
+	    void		LogOwnError(const char* pErrMsg) const;
+	    bool		IsError() const;
+
+	    private :
 
 	    bool          bErr;
     };

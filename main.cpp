@@ -15,8 +15,8 @@ int main()
     RACconsumer::RawSocketConsumer  consumer;
 
 
-    std::thread tConsumer(&RACconsumer::RawSocketConsumer::ConsumeQueueAndDecode, consumer);
     std::thread tProducer(&RACproducer::RawSocketProducer::ListenRawDataAndFillQueue, producer);
+    std::thread tConsumer(&RACconsumer::RawSocketConsumer::ConsumeQueueAndDecode, consumer);
 
 
     tProducer.join();

@@ -25,8 +25,6 @@ namespace RACconsumer
 
     int RawSocketConsumer::DecodeRawData(std::tuple<const char*, int> *oData)
     {
-	write(1, "DECODE", 6);
-	write(1, std::get<0>(*oData), std::get<1>(*oData));
 	RACdata::RawData::qData.pop();
     }
 

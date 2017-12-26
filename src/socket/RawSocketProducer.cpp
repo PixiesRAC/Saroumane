@@ -24,7 +24,6 @@ namespace RACproducer
 
   int   RawSocketProducer::FillQueue(std::tuple<const char*, int> oData)
   {    
-      write(1, "FILLQUEUE", 8);
       std::lock_guard<std::mutex> lock(RACdata::RawData::oMutex);
       RACdata::RawData::qData.push(&oData);
   }

@@ -15,7 +15,7 @@ namespace RAClistener
 
 	    std::tuple<const char*, int>    ReadSocket() const;
 
-	    static const constexpr int	    iMaxIpPacketSize = 65535;
+	    static  constexpr int	    iMaxIpPacketSize = 65535;
 	    int				    fd; 
 
 	    RACerror::ErrorSocket            oRawSocketListenerError;

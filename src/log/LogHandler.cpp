@@ -2,10 +2,20 @@
 #include <sstream>
 #include "LogHandler.h"
 #include "TimeHandler.h"
+#include <signal.h>
+#include <unistd.h>
+
+static void handler(int sig)
+{
+    alarm(1);
+    LOGFLUSH();
+}
 
 RAClog::FileLogHandler::FileLogHandler()
 {
     this->CreateFileLog();
+    sigset(SIGALRM, handler);
+    alarm(1);
 }
 
 RAClog::FileLogHandler::~FileLogHandler()

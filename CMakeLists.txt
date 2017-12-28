@@ -36,6 +36,7 @@ add_test( runUnitTests runUnitTests )
 ################################
 
 set(INCLUDE_JSONBOOST_DIR, third_party/property_tree/include/)
+set(INCLUDE_FORMATBOOST_DIR, third_party/format/include/)
 
 ################################
 # END Json Boost
@@ -47,6 +48,7 @@ set(INCLUDE_SOCKET_DIRECTORY "include/socket/")
 set(INCLUDE_CONF_DIRECTORY "include/conf/")
 set(INCLUDE_ERROR_DIRECTORY "include/error/")
 set(INCLUDE_DATA_DIRECTORY "include/data/")
+set(INCLUDE_PROTOCOLS_DIRECTORY "include/protocols/")
 set(EXECUTABLE_OUTPUT_PATH bin)
 
     add_executable(
@@ -81,15 +83,25 @@ set(EXECUTABLE_OUTPUT_PATH bin)
 	    include/data/PacketData.h
 	    include/data/RawDataInstanceInitializer.h
 
-	    include/socket/RawSocketConsumer.h
 	    src/socket/RawSocketConsumer.cpp
+	    include/socket/RawSocketConsumer.h
 
+	    src/protocols/ProtocolIP.cpp
+	    src/protocols/ProtocolEthernet.cpp
+	    include/protocols/IProtocol.h
+	    include/protocols/ProtocolIP.h
+	    include/protocols/ProtocolsDefinition.h
+	    include/protocols/ProtocolEthernet.h
 	    )
 
 TARGET_LINK_LIBRARIES( RAC_RenifleurDuXul
 pthread
 )
 include_directories(${INCLUDE_LOG_DIRECTORY} ${gtest_SOURCE_DIR} ${INCLUDE_TIME_DIRECTORY} 
-		    ${INCLUDE_SOCKET_DIRECTORY} ${INCLUDE_CONF_DIRECTORY} ${INCLUDE_JSONBOOST_DIR} ${INCLUDE_ERROR_DIRECTORY} ${INCLUDE_DATA_DIRECTORY} )
+		    ${INCLUDE_SOCKET_DIRECTORY} ${INCLUDE_CONF_DIRECTORY} ${INCLUDE_JSONBOOST_DIR} 
+		    ${INCLUDE_ERROR_DIRECTORY} ${INCLUDE_DATA_DIRECTORY}  ${INCLUDE_PROTOCOLS_DIRECTORY}
+		    ${INCLUDE_FORMATBOOST_DIR} )
+
+
 
 

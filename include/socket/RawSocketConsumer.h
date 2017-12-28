@@ -1,6 +1,8 @@
 #pragma once
 
 #include "ErrorSocket.h"
+#include "ProtocolIP.h"
+#include "ProtocolEthernet.h"
 #include <tuple>
 
 namespace RACconsumer

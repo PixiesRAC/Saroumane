@@ -19,13 +19,20 @@ namespace RACconsumer
 	    if (!RACdata::RawData::qData.empty())
 	    {
 		DecodeRawData(RACdata::RawData::qData.front());
+		RACdata::RawData::qData.pop();
 	    }
 	}
     }
 
     int RawSocketConsumer::DecodeRawData(std::tuple<const char*, int> *oData)
     {
-	RACdata::RawData::qData.pop();
+	RACdecoder::DecoderLayer decodeLayer(std::get<0>(*oData));
+
+	decoderLayer.Display();
+
+/*	proto.setStructProtocol(std::get<0>(*oData));
+	std::cout << proto.getProtocolFormated() << std::endl;
+	std::cout << std::get<1>(*oData) << std::endl; */
     }
 
 }

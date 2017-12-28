@@ -2,6 +2,7 @@
 #include "RawSocketTCP.h"
 #include "JsonConfInstanceInitializer.h"
 
+#include <net/ethernet.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -28,7 +29,7 @@ namespace RACsocket
 
     int RawSocketTCP::CreateSocket()
     {
-	fd = socket(PF_INET, SOCK_RAW, IPPROTO_TCP);
+	fd = socket(PF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
 	if (fd == -1)
 	{
 	    oRawSocketTCPError.SetErrorStateAndLogErrorFromErno(true);
@@ -88,8 +89,4 @@ namespace RACsocket
 	SetErrorState(bErrorFlag);
 	LogOwnError(pErrMsg);
     }
-
-
-
-
 }

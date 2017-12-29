@@ -2,6 +2,7 @@
 #include "RawSocketConsumer.h"
 #include "PacketData.h"
 #include "LogHandler.h"
+#include "DecoderLayer.h"
 #include <unistd.h>
 
 namespace RACconsumer
@@ -26,9 +27,9 @@ namespace RACconsumer
 
     int RawSocketConsumer::DecodeRawData(std::tuple<const char*, int> *oData)
     {
-	RACdecoder::DecoderLayer decodeLayer(std::get<0>(*oData));
+	RACdecoder::DecoderLayer decoderLayer(std::get<0>(*oData));
 
-	decoderLayer.Display();
+	decoderLayer.DisplayProtocolDecoded(); // should be in a container and another thread will read it
 
 /*	proto.setStructProtocol(std::get<0>(*oData));
 	std::cout << proto.getProtocolFormated() << std::endl;

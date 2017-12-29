@@ -40,7 +40,7 @@ namespace RACprotocol
 	public :
 
 	virtual const std::string   getProtocolFormated() const override final;
-	virtual void		    setStructProtocol(const char* data) override final;
+	virtual void		    setStructProtocol(const char* pData) override final;
 
 	const uint8_t	*getDestMAC() const;
 	const uint8_t	*getSrcMAC() const;

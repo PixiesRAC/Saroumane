@@ -49,6 +49,7 @@ set(INCLUDE_CONF_DIRECTORY "include/conf/")
 set(INCLUDE_ERROR_DIRECTORY "include/error/")
 set(INCLUDE_DATA_DIRECTORY "include/data/")
 set(INCLUDE_PROTOCOLS_DIRECTORY "include/protocols/")
+set(INCLUDE_DECODER_DIRECTORY "include/decoder/")
 set(EXECUTABLE_OUTPUT_PATH bin)
 
     add_executable(
@@ -92,6 +93,10 @@ set(EXECUTABLE_OUTPUT_PATH bin)
 	    include/protocols/ProtocolIP.h
 	    include/protocols/ProtocolsDefinition.h
 	    include/protocols/ProtocolEthernet.h
+	    include/protocols/ProtocolsHeader.h
+
+	    src/decoder/DecoderLayer.cpp
+	    include/decoder/DecoderLayer.h
 	    )
 
 TARGET_LINK_LIBRARIES( RAC_RenifleurDuXul
@@ -100,7 +105,7 @@ pthread
 include_directories(${INCLUDE_LOG_DIRECTORY} ${gtest_SOURCE_DIR} ${INCLUDE_TIME_DIRECTORY} 
 		    ${INCLUDE_SOCKET_DIRECTORY} ${INCLUDE_CONF_DIRECTORY} ${INCLUDE_JSONBOOST_DIR} 
 		    ${INCLUDE_ERROR_DIRECTORY} ${INCLUDE_DATA_DIRECTORY}  ${INCLUDE_PROTOCOLS_DIRECTORY}
-		    ${INCLUDE_FORMATBOOST_DIR} )
+		    ${INCLUDE_FORMATBOOST_DIR} ${INCLUDE_DECODER_DIRECTORY} )
 
 
 

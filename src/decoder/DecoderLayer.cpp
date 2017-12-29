@@ -1,42 +1,39 @@
 #include "DecoderLayer.h"
 
-DecoderLayer::DecoderLayer(const char* pData)
+namespace RACdecoder
 {
-    RACprotocol::ProtocolEthernet ProtocolLayer2;
-
-    ProtocolLayer2.setStructProtocol(pData);
-    switch (protocol.GetEtherType)
+    DecoderLayer::DecoderLayer(const char* pData)
     {
-	IP :
-	    DecodeLayer3<RACprotocol::ProtocolIP>(pData + (sizeof(protocol.getStruct))
+	RACprotocol::ProtocolEthernet ProtocolLayer2;
 
-    sDataDecodeBatching += protocol.getProtocolFormated();
-    }
-}
+	ProtocolLayer2.setStructProtocol(pData);
+	//	    switch (protocol.GetEtherType)
+	//IP :
+	//DecodeLayer3<RACprotocol::ProtocolIP>(pData + (sizeof(protocol.getStruct))
 
-template <typename T>
-DecoderLayer::DecodeLayer3(const char *pdata)
-{
-    std::unique_ptr<RACprotocol::IProtocol> spProtocolLayer3 = std::make_unique<T>();
-
-    ProtocolLayer2->setStructProtocol(pData);
-    sDataDecoderBatching += protocol->GetProtocolFormated();
-}
-
-template <>
-DecoderLayer::DecodeLayer3<RACprotocol::ProtocolIP>(const char *pdata)
-{
-    RACprotocol::ProtocolIP p;
-
-    P.setStructProtocol(pData);
-
-    switch (p.getProtocol)
-    {
-	case : TCP
-	   DecodeLayer4<RACprotocol::ProtocolTCP>(pData + (sizeof(protocol.getStruc))
+	sDataDecodeBuffer += ProtocolLayer2.getProtocolFormated();
+	DecodeLayer3<RACprotocol::ProtocolIP>(pData);
+	std::cout << "LAYER 2 " << std::endl;
     }
 
-    sDataDecoderBatching += p.GetProtocolFormated();
+    template <typename T>
+	void	DecoderLayer::DecodeLayer3(const char *pData)
+	{
+	    std::cout << "Layer 3 " << std::endl;
+	    std::unique_ptr<RACprotocol::IProtocol> spProtocolLayer3 = std::make_unique<T>();
+
+	    spProtocolLayer3->setStructProtocol(pData);
+	    sDataDecodeBuffer += spProtocolLayer3->getProtocolFormated();
+	}
+
+    template <>
+	void	DecoderLayer::DecodeLayer3<RACprotocol::ProtocolIP>(const char *pData)
+	{
+	    std::cout << "LAYER 3 UNDER SPECIALIZATION" << std::endl;
+	    RACprotocol::ProtocolIP ProtocolIP;
+
+	    ProtocolIP.setStructProtocol(pData);
+
+	    sDataDecodeBuffer += ProtocolIP.getProtocolFormated();
+	}
 }
-
-

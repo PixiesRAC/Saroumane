@@ -11,14 +11,9 @@ namespace RACprotocol
 
 	virtual ~IProtocol() = default;
 
-	protected :
-
 	using BYTE = char;
 
-	virtual const	std::string	getProtocolFormated()
-	{
-	    return ("UNKNOW PROTOCOL");
-	};
+	virtual const	std::string	getProtocolFormated() const = 0;
 	virtual	void			setStructProtocol(const char* data) = 0;
     };
 }

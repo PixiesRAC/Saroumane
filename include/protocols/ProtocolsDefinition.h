@@ -2,7 +2,7 @@
 
 using BYTE = char;
 
-namespace ip
+namespace ip_protocol
 {
     namespace service
     {

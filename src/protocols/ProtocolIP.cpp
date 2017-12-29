@@ -1,45 +1,39 @@
 #include "ProtocolIP.h"
 
-
 namespace RACprotocol
 {
-    BYTE        ProtocolIP::getVers_ihl() const
+
+    ProtocolIP::ProtocolIP()
     {
-	return	proto.bvers_ihl;
+	pProtoStruct = new protocol;
+	bzero(pProtoStruct, sizeof(protocol));
     }
 
-    BYTE        ProtocolIP::getService() const
+    ProtocolIP::~ProtocolIP()
     {
-	return proto.bservice;
+	if (pProtoStruct != nullptr)
+	{
+	    delete pProtoStruct;
+	}
     }
-    short       ProtocolIP::getLenght() const
+
+    const std::string	ProtocolIP::getProtocolFormated() const
     {
-	return proto.slenght;
+	return std::string("");
     }
-    short       ProtocolIP::getIdentification() const
+
+    void    ProtocolIP::setStructProtocol(const char *pData)
     {
-	return proto.sidentification;
+	memcpy(pProtoStruct, pData, sizeof(*pProtoStruct));
     }
-    short       ProtocolIP::getFlags_positionFragment() const
-    {
-    }
-    BYTE        ProtocolIP::getTTL() const
-    {
-    }
+
     BYTE        ProtocolIP::getProtocol() const
-    {
-    }
-    short       ProtocolIP::getChecksum() const
     {
     }
     int         ProtocolIP::getSrcIP() const
     {
     }
-    const char  *ProtocolIP::getOption() const
+    int		ProtocolIP::getDestIP() const
     {
     }
-    BYTE        ProtocolIP::getJam() const
-    {
-    }
-
 }

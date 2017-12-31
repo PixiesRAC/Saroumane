@@ -3,6 +3,7 @@
 #include "PacketData.h"
 #include "LogHandler.h"
 #include "DecoderLayer.h"
+#include "DecodedData.h"
 #include <unistd.h>
 
 namespace RACconsumer
@@ -16,9 +17,9 @@ namespace RACconsumer
     {
 	while (1)
 	{
-	    std::lock_guard<std::mutex> lock(RACdata::RawData::oMutex);
 	    if (!RACdata::RawData::qData.empty())
 	    {
+		std::lock_guard<std::mutex> lock(RACdata::RawData::oMutex);
 		DecodeRawData(RACdata::RawData::qData.front());
 		RACdata::RawData::qData.pop();
 	    }
@@ -27,13 +28,12 @@ namespace RACconsumer
 
     int RawSocketConsumer::DecodeRawData(std::tuple<const char*, int> *oData)
     {
-	RACdecoder::DecoderLayer decoderLayer(std::get<0>(*oData));
+	if (((std::get<1>(*oData)) > 0))
+	{
+	    RACdecoder::DecoderLayer decoderLayer(std::get<0>(*oData));
 
-	decoderLayer.DisplayProtocolDecoded(); // should be in a container and another thread will read it
-
-/*	proto.setStructProtocol(std::get<0>(*oData));
-	std::cout << proto.getProtocolFormated() << std::endl;
-	std::cout << std::get<1>(*oData) << std::endl; */
+	   // std::lock_guard<std::mutex> lock(RACdata::DecodedData::oMutex);
+	    RACdata::DecodedData::qData.push(decoderLayer.getProtocolDecoded());
+	}
     }
-
 }

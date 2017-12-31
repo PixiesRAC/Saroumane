@@ -1,8 +1,5 @@
 #pragma once
 
-#include <iostream>
-#include <string.h>
-#include <sstream>
 #include <netinet/ip.h>
 #include "IProtocol.h"
 #include "ProtocolsDefinition.h"
@@ -21,13 +18,23 @@ namespace RACprotocol
 	    const std::string   getProtocolFormated() const;	
 	    void		setStructProtocol(const char* data);
 
-	    BYTE	    getProtocol() const;
-	    int		    getSrcIP() const;
-	    int		    getDestIP() const;
-
-
 	private :
+	    u_char	    getHeaderLength() const;
+	    u_char	    getVersion() const;
+	    u_char	    getTos() const;
+	    short	    getTotalLength() const;
+	    u_short	    getID() const;
+	    short	    getOff() const;
+	    u_char	    getTTL() const;
+	    u_short	    getChecksum() const;
+	    struct  in_addr getSrcIP() const;
+	    struct  in_addr getDestIP() const;
 
-		protocol    *pProtoStruct;
+
+	public :
+
+	    u_char	    getProtocol() const;
+
+	    protocol    *pProtoStruct;
     };
 }

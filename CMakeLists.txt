@@ -96,7 +96,9 @@ set(EXECUTABLE_OUTPUT_PATH bin)
 	    include/protocols/ProtocolsHeader.h
 
 	    src/decoder/DecoderLayer.cpp
+	    src/decoder/DecodedDataHandler.cpp
 	    include/decoder/DecoderLayer.h
+	    include/decoder/DecodedDataHandler.h
 	    )
 
 TARGET_LINK_LIBRARIES( RAC_RenifleurDuXul

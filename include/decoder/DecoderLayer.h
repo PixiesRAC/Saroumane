@@ -1,7 +1,9 @@
 #pragma once
 
 #include "ProtocolsHeader.h"
+#include "LogHandler.h"
 #include <iostream>
+#include <tuple>
 
 namespace RACdecoder
 {
@@ -10,10 +12,11 @@ namespace RACdecoder
 	public :
 
 	    DecoderLayer(const char*);
+	    ~DecoderLayer() = default;
 
-	    void	DisplayProtocolDecoded()
+	    std::tuple<const char*, int> getProtocolDecoded()
 	    {
-		std::cout << sDataDecodeBuffer << std::endl;
+		//return sDataDecodeBuffer;
 	    }
 
 	private :
@@ -27,7 +30,9 @@ namespace RACdecoder
 		template <typename T>
 		void	DecoderLayer6(const char* pData);
 	     */
-	    std::string	sDataDecodeBuffer;
+	    std::string	    sDataDecodeBuffer;
+	    unsigned	int iDecodedSizeBinaryBuffer;
+	    bool	    bIsError;
     };
 
     template <>

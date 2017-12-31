@@ -2,8 +2,16 @@
 
 using BYTE = char;
 
-namespace ip_protocol
+namespace etherType
 {
+    namespace protocol
+    {
+	enum value : uint16_t 
+	{
+	    IPV4 = 0x0800,	    
+	    ARP = 0x0806
+	};
+    }
     namespace service
     {
 	namespace priority

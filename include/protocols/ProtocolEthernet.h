@@ -24,7 +24,7 @@ namespace RACprotocol
 	    {
 		uint8_t	    uDestMAC[6]; 
 		uint8_t	    uSrcMAC[6];
-		uint16_t    uEtherType;
+		uint8_t	    uEtherType[2];
 	    };
 
 	    struct	    protocol8021Q
@@ -38,6 +38,11 @@ namespace RACprotocol
 #pragma pack (pop)
 
 	public :
+
+	struct protocol	*getStruct() const
+	{
+	    return pProtoStruct;
+	}
 
 	virtual const std::string   getProtocolFormated() const override final;
 	virtual void		    setStructProtocol(const char* pData) override final;

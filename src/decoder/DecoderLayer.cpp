@@ -1,25 +1,30 @@
 #include "DecoderLayer.h"
+#include "DecodedData.h"
 
 namespace RACdecoder
 {
-    DecoderLayer::DecoderLayer(const char* pData)
+    DecoderLayer::DecoderLayer(const char* pData) : bIsError(false), iDecodedSizeBinaryBuffer(0)
     {
+	std::lock_guard<std::mutex> lock(RACdata::DecodedData::oMutex);
 	RACprotocol::ProtocolEthernet ProtocolLayer2;
 
 	ProtocolLayer2.setStructProtocol(pData);
-	//	    switch (protocol.GetEtherType)
-	//IP :
-	//DecodeLayer3<RACprotocol::ProtocolIP>(pData + (sizeof(protocol.getStruct))
-
 	sDataDecodeBuffer += ProtocolLayer2.getProtocolFormated();
-	DecodeLayer3<RACprotocol::ProtocolIP>(pData);
-	std::cout << "LAYER 2 " << std::endl;
+
+	const uint16_t	EtherType = ProtocolLayer2.getEtherType();
+	switch (EtherType)
+	{
+	    case  etherType::protocol::IPV4 :
+		DecodeLayer3<RACprotocol::ProtocolIP>(pData + (sizeof((*(ProtocolLayer2.getStruct()) ))) );
+		break;
+	    default:
+		bIsError = true;
+	}
     }
 
     template <typename T>
 	void	DecoderLayer::DecodeLayer3(const char *pData)
 	{
-	    std::cout << "Layer 3 " << std::endl;
 	    std::unique_ptr<RACprotocol::IProtocol> spProtocolLayer3 = std::make_unique<T>();
 
 	    spProtocolLayer3->setStructProtocol(pData);
@@ -29,11 +34,13 @@ namespace RACdecoder
     template <>
 	void	DecoderLayer::DecodeLayer3<RACprotocol::ProtocolIP>(const char *pData)
 	{
-	    std::cout << "LAYER 3 UNDER SPECIALIZATION" << std::endl;
 	    RACprotocol::ProtocolIP ProtocolIP;
 
 	    ProtocolIP.setStructProtocol(pData);
-
 	    sDataDecodeBuffer += ProtocolIP.getProtocolFormated();
+	    switch (ProtocolIP.getProtocol())
+	    {
+
+	    }
 	}
 }

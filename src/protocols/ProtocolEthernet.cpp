@@ -19,7 +19,7 @@ namespace RACprotocol
 
     const std::string	ProtocolEthernet::getProtocolFormated() const
     {
-	boost::format fmt("Dest MAC : %02x::%02x::%02x::%02x::%02x::%02x\nSrc MAC  : %02x::%02x::%02x::%02x::%02x::%02x\nEtherType : %d");
+	boost::format fmt("\nDest MAC : %02x::%02x::%02x::%02x::%02x::%02x\nSrc MAC  : %02x::%02x::%02x::%02x::%02x::%02x\nEtherType : %d\n");
 	for (int i = 0; i != sizeof(pProtoStruct->uSrcMAC); ++i)
 	{
 	    fmt % ((int)pProtoStruct->uSrcMAC[i]);
@@ -28,7 +28,7 @@ namespace RACprotocol
 	{
 	    fmt % ((int)pProtoStruct->uDestMAC[i]);
 	}
-	fmt % pProtoStruct->uEtherType;
+	fmt % getEtherType();
 
 	return fmt.str();
     }
@@ -48,8 +48,8 @@ namespace RACprotocol
 	return pProtoStruct->uSrcMAC;
     }
 
-    const uint16_t  ProtocolEthernet::getEtherType() const
+    const uint16_t   ProtocolEthernet::getEtherType() const
     {
-	return pProtoStruct->uEtherType;
+	return ( pProtoStruct->uEtherType[0] << 8 |  pProtoStruct->uEtherType[1]);
     } 
 }

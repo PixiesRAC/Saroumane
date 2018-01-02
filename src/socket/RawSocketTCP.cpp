@@ -10,6 +10,12 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 
+#include <sys/ioctl.h>
+#include <net/if.h>
+#include <sys/socket.h>
+#include <linux/if_packet.h>
+#include <net/ethernet.h> /* the L2 protocols */
+
 namespace RACsocket
 {
     RawSocketTCP::RawSocketTCP()
@@ -42,9 +48,36 @@ namespace RACsocket
 	return close(fd);
     }
 
+    void    RawSocketTCP::PerformPromiscuousMode()
+    {
+
+	struct ifreq ifr;
+	struct packet_mreq mr;
+
+	ifr.ifr_ifindex = 0;
+	strcpy(ifr.ifr_name, "eth0");
+
+	if (ioctl(fd, SIOGIFINDEX, &ifr) < 0)
+	{
+	    perror("ioctl error ");
+	    return ;
+	}
+
+	memset(&mr, 0, sizeof(mr));
+	mr.mr_ifindex = ifr.ifr_ifindex;
+	mr.mr_type =  PACKET_MR_PROMISC;
+
+	if (setsockopt(fd, SOL_PACKET, PACKET_ADD_MEMBERSHIP,
+		    (char *)&mr, sizeof(mr)) < 0)
+	{
+	    perror("setsockopt error ");
+	    return ;
+	}
+    }
+
     int	RawSocketTCP::Bind()
     {
-	sockaddr_in addr;
+/*	sockaddr_in addr;
 
 	if (setsockopt(fd, SOL_SOCKET, SO_BINDTODEVICE, sInterface.c_str(), sInterface.length()) == -1)
 	{
@@ -59,7 +92,8 @@ namespace RACsocket
 	{
 	    oRawSocketTCPError.SetErrorStateAndLogErrorFromErno(true);
 	    return -1;
-	}
+	} */
+	PerformPromiscuousMode();
 	return 1;
     }
 

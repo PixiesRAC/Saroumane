@@ -1,5 +1,6 @@
 #include "ProtocolEthernet.h"
 #include <unistd.h>
+#include <sstream>
 
 namespace RACprotocol
 {
@@ -17,20 +18,24 @@ namespace RACprotocol
 	}
     }
 
+    std::string		ProtocolEthernet::getMACFormated(const uint8_t *uMAC) const
+    {
+	char	cMAC[64];
+
+	bzero(cMAC, 64);
+	sprintf(cMAC, "%02x::%02x::%02x::%02x::%02x::%02x", 
+		(int)uMAC[0], (int)uMAC[1], (int)uMAC[2], (int)uMAC[3], (int)uMAC[4], (int)uMAC[5]);
+
+	return std::string(cMAC);
+    }
+
     const std::string	ProtocolEthernet::getProtocolFormated() const
     {
-	boost::format fmt("\nDest MAC : %02x::%02x::%02x::%02x::%02x::%02x\nSrc MAC  : %02x::%02x::%02x::%02x::%02x::%02x\nEtherType : %d\n");
-	for (int i = 0; i != sizeof(pProtoStruct->uSrcMAC); ++i)
-	{
-	    fmt % ((int)pProtoStruct->uSrcMAC[i]);
-	}
-	for (int i = 0; i != sizeof(pProtoStruct->uDestMAC); ++i)
-	{
-	    fmt % ((int)pProtoStruct->uDestMAC[i]);
-	}
-	fmt % getEtherType();
+	std::stringstream ss;
 
-	return fmt.str();
+	ss << std::endl << "Src MAC:" << getMACFormated(pProtoStruct->uSrcMAC) << std::endl << "Dest MAC:" << getMACFormated(pProtoStruct->uDestMAC) << std::endl << "EtherType: " << getEtherType() << std::endl;
+
+	return ss.str();
     }
 
     void	ProtocolEthernet::setStructProtocol(const char* data)

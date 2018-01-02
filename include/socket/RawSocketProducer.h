@@ -1,6 +1,9 @@
 #pragma once
 
 #include "RawSocketListener.h"
+#include "RawSocketConsumer.h"
+#include "TSqueue.h"
+#include <tuple>
 
 namespace RACproducer
 {
@@ -8,15 +11,17 @@ namespace RACproducer
     {
 	public:
 
-	    RawSocketProducer() = delete;
+	    RawSocketProducer() {fd = -1;}
 	    RawSocketProducer(int fd);
+	    RawSocketProducer(const RawSocketProducer&);
 	    ~RawSocketProducer() = default;
 
-	    int	ListenRawDataAndFillQueue();
+	    int	ListenRawDataAndDecode();
 
 	private :
 
-	   int			FillQueue(std::tuple<const char*, int> oData);
+	   int			DecodeAndFillQueue(std::tuple<const char*, int> oData);
 
+	   RACqueue::TSqueue<std::string>   queue;
     };
 }

@@ -10,7 +10,7 @@ namespace RACdata
     {
 	public :
 
-	static std::queue<std::tuple<const char*, int>*> qData;
+	static std::queue<std::tuple<const char*, int>> qData;
 	static std::mutex oMutex;
     };
 }

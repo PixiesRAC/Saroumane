@@ -18,6 +18,8 @@ namespace RACsocket
 	    virtual int	Bind() override final;
 
 	private :
+    
+	    void    PerformPromiscuousMode();
 
 	    virtual int CreateSocket() override final;
 	    virtual int CloseSocket() override final;

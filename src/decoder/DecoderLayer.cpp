@@ -1,24 +1,33 @@
 #include "DecoderLayer.h"
-#include "DecodedData.h"
+#include "TimeHandler.h"
+//#include "DecodedData.h"
 
 namespace RACdecoder
 {
     DecoderLayer::DecoderLayer(const char* pData) : bIsError(false), iDecodedSizeBinaryBuffer(0)
     {
-	std::lock_guard<std::mutex> lock(RACdata::DecodedData::oMutex);
+	sDataDecodeBuffer = RACtime::TimeHandler::GetTime();
 	RACprotocol::ProtocolEthernet ProtocolLayer2;
-
 	ProtocolLayer2.setStructProtocol(pData);
-	sDataDecodeBuffer += ProtocolLayer2.getProtocolFormated();
 
 	const uint16_t	EtherType = ProtocolLayer2.getEtherType();
-	switch (EtherType)
+
+	if (EtherType > ETHERTYPE_MINIMAL)
 	{
-	    case  etherType::protocol::IPV4 :
-		DecodeLayer3<RACprotocol::ProtocolIP>(pData + (sizeof((*(ProtocolLayer2.getStruct()) ))) );
-		break;
-	    default:
-		bIsError = true;
+	    sDataDecodeBuffer += ProtocolLayer2.getProtocolFormated();
+	    iDecodedSizeBinaryBuffer = sDataDecodeBuffer.length();
+
+	    switch (EtherType)
+	    {
+		case  etherType::protocol::IPV4 :
+		    DecodeLayer3<RACprotocol::ProtocolIP>(pData + (sizeof((*(ProtocolLayer2.getStruct()) ))) );
+		    break;
+	    }
+	}
+	else
+	{
+	    iDecodedSizeBinaryBuffer = 0;
+	    // We receive the size of the data
 	}
     }
 
@@ -38,6 +47,7 @@ namespace RACdecoder
 
 	    ProtocolIP.setStructProtocol(pData);
 	    sDataDecodeBuffer += ProtocolIP.getProtocolFormated();
+	    iDecodedSizeBinaryBuffer =sDataDecodeBuffer.length();
 	    switch (ProtocolIP.getProtocol())
 	    {
 

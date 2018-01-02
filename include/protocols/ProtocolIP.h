@@ -12,6 +12,12 @@ namespace RACprotocol
 
 	    using protocol  = struct ip;
 
+	     protocol   *getStruct() const // must be virtual
+	     {
+		   return pProtoStruct;
+	     }
+
+
 	    ProtocolIP();
 	    virtual ~ProtocolIP() override final;
 

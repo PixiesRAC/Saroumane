@@ -39,7 +39,7 @@ namespace RACprotocol
 
 	public :
 
-	struct protocol	*getStruct() const
+	struct protocol	*getStruct() const // must be virtual
 	{
 	    return pProtoStruct;
 	}
@@ -53,6 +53,9 @@ namespace RACprotocol
 
 	private :
 
+	std::string	    getMACFormated(const uint8_t *) const;
+
 	struct	protocol    *pProtoStruct;
+	static constexpr	    uint8_t uMACsize = 6;
   };
 }

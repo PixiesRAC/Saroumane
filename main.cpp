@@ -1,5 +1,5 @@
 #include "LogInstanceInitializer.h"
-#include "RawDataInstanceInitializer.h"
+//#include "RawDataInstanceInitializer.h"
 #include "RawSocketTCP.h"
 #include "RawSocketProducer.h"
 #include "RawSocketConsumer.h"
@@ -13,16 +13,17 @@ int main()
     std::unique_ptr<RACsocket::ISocket> socket = std::make_unique<RACsocket::RawSocketTCP>();
 
     RACproducer::RawSocketProducer  producer(socket->GetSocketfd());
+
+    //producer.ListenRawDataAndFillQueue();
     RACconsumer::RawSocketConsumer  consumer;
-    RACreader::DecodedDataHandler   reader;
+    //RACreader::DecodedDataHandler   reader;
 
-
-    std::thread tProducer(&RACproducer::RawSocketProducer::ListenRawDataAndFillQueue, producer);
-    std::thread tConsumer(&RACconsumer::RawSocketConsumer::ConsumeQueueAndDecode, consumer);
-    std::thread tReader(&RACreader::DecodedDataHandler::ReadDecodedValue, reader);
+    std::thread tProducer(&RACproducer::RawSocketProducer::ListenRawDataAndDecode, producer);
+    std::thread tConsumer(&RACconsumer::RawSocketConsumer::ConsumeQueueAndDisplay, consumer);
+    //std::thread tReader(&RACreader::DecodedDataHandler::ReadDecodedValue, reader);
 
     tProducer.join();
     tConsumer.join();
-    tReader.join();
+    //tReader.join();
     return 0;
 }

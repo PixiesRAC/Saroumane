@@ -47,9 +47,10 @@ set(INCLUDE_TIME_DIRECTORY "include/time/")
 set(INCLUDE_SOCKET_DIRECTORY "include/socket/")
 set(INCLUDE_CONF_DIRECTORY "include/conf/")
 set(INCLUDE_ERROR_DIRECTORY "include/error/")
-set(INCLUDE_DATA_DIRECTORY "include/data/")
+#set(INCLUDE_DATA_DIRECTORY "include/data/")
 set(INCLUDE_PROTOCOLS_DIRECTORY "include/protocols/")
 set(INCLUDE_DECODER_DIRECTORY "include/decoder/")
+set(INCLUDE_TS_DIRECTORY "include/thread_safe/")
 set(EXECUTABLE_OUTPUT_PATH bin)
 
     add_executable(
@@ -99,6 +100,9 @@ set(EXECUTABLE_OUTPUT_PATH bin)
 	    src/decoder/DecodedDataHandler.cpp
 	    include/decoder/DecoderLayer.h
 	    include/decoder/DecodedDataHandler.h
+
+	    src/thread_safe/TSqueue.cpp
+	    include/thread_safe/TSqueue.h
 	    )
 
 TARGET_LINK_LIBRARIES( RAC_RenifleurDuXul
@@ -106,8 +110,8 @@ pthread
 )
 include_directories(${INCLUDE_LOG_DIRECTORY} ${gtest_SOURCE_DIR} ${INCLUDE_TIME_DIRECTORY} 
 		    ${INCLUDE_SOCKET_DIRECTORY} ${INCLUDE_CONF_DIRECTORY} ${INCLUDE_JSONBOOST_DIR} 
-		    ${INCLUDE_ERROR_DIRECTORY} ${INCLUDE_DATA_DIRECTORY}  ${INCLUDE_PROTOCOLS_DIRECTORY}
-		    ${INCLUDE_FORMATBOOST_DIR} ${INCLUDE_DECODER_DIRECTORY} )
+		    ${INCLUDE_ERROR_DIRECTORY} ${INCLUDE_PROTOCOLS_DIRECTORY}
+		    ${INCLUDE_FORMATBOOST_DIR} ${INCLUDE_DECODER_DIRECTORY} ${INCLUDE_TS_DIRECTORY})
 
 
 

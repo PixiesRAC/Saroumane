@@ -5,6 +5,9 @@
 #include <iostream>
 #include <tuple>
 
+#define  MINIMAL_TRAME_SIZE 40
+#define	 ETHERTYPE_MINIMAL (unsigned int)1500
+
 namespace RACdecoder
 {
     class DecoderLayer
@@ -14,9 +17,9 @@ namespace RACdecoder
 	    DecoderLayer(const char*);
 	    ~DecoderLayer() = default;
 
-	    std::tuple<const char*, int> getProtocolDecoded()
+	    std::string getProtocolDecoded() const
 	    {
-		//return sDataDecodeBuffer;
+		return sDataDecodeBuffer;
 	    }
 
 	private :
@@ -30,9 +33,10 @@ namespace RACdecoder
 		template <typename T>
 		void	DecoderLayer6(const char* pData);
 	     */
-	    std::string	    sDataDecodeBuffer;
-	    unsigned	int iDecodedSizeBinaryBuffer;
-	    bool	    bIsError;
+
+	    std::string		sDataDecodeBuffer;
+	    unsigned int	iDecodedSizeBinaryBuffer;
+	    bool		bIsError;
     };
 
     template <>

@@ -9,7 +9,12 @@ namespace RAClistener
     {
 	protected:
 
-	    RawSocketListener() = delete;
+	    RawSocketListener() {fd = -1;}
+	    RawSocketListener(const RawSocketListener& obj)
+	    {
+		fd = obj.fd;
+	    }
+
 	    RawSocketListener(int fd);
 	    ~RawSocketListener() = default;
 

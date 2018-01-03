@@ -29,7 +29,7 @@ namespace RACprotocol
 	return std::string(cMAC);
     }
 
-    const std::string	ProtocolEthernet::getProtocolFormated() const
+    const std::string	ProtocolEthernet::derivedGetProtocolFormated() const 
     {
 	std::stringstream ss;
 
@@ -38,7 +38,7 @@ namespace RACprotocol
 	return ss.str();
     }
 
-    void	ProtocolEthernet::setStructProtocol(const char* data)
+    void	ProtocolEthernet::derivedSetStructProtocol(const char* data)
     {
 	memcpy(pProtoStruct, data, sizeof(*pProtoStruct));
     }
@@ -53,7 +53,7 @@ namespace RACprotocol
 	return pProtoStruct->uSrcMAC;
     }
 
-    const uint16_t   ProtocolEthernet::getEtherType() const
+    uint16_t   ProtocolEthernet::getEtherType() const
     {
 	return ( pProtoStruct->uEtherType[0] << 8 |  pProtoStruct->uEtherType[1]);
     } 

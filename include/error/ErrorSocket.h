@@ -6,10 +6,7 @@ namespace RACerror
     {
 	public :
 
-	    ErrorSocket()
-	    {
-		bErr = false;
-	    }
+	    ErrorSocket();
 	    ~ErrorSocket() = default;
 
 	    const char		*GetErrorFromErno() const;

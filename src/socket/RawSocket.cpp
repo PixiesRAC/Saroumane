@@ -1,5 +1,5 @@
 #include "LogHandler.h"
-#include "RawSocketTCP.h"
+#include "RawSocket.h"
 #include "JsonConfInstanceInitializer.h"
 
 #include <net/ethernet.h>
@@ -18,44 +18,44 @@
 
 namespace RACsocket
 {
-    RawSocketTCP::RawSocketTCP()
+    RawSocket::RawSocket()
     {
 	Config();
 	CreateSocket(); 
-	if (!oRawSocketTCPError.IsError())
+	if (!oRawSocketError.IsError())
 	{
 	    LOG(INFO, "Raw Socket Tcp Creation : DONE SUCCESS");
 	}
     }
 
-    RawSocketTCP::~RawSocketTCP()
+    RawSocket::~RawSocket()
     {
 	CloseSocket();
     }
 
-    int RawSocketTCP::CreateSocket()
+    int RawSocket::CreateSocket()
     {
 	fd = socket(PF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
 	if (fd == -1)
 	{
-	    oRawSocketTCPError.SetErrorStateAndLogErrorFromErno(true);
+	    oRawSocketError.SetErrorStateAndLogErrorFromErno(true);
 	}
 	return fd;
     }
 
-    int RawSocketTCP::CloseSocket()
+    int RawSocket::CloseSocket()
     {
 	return close(fd);
     }
 
-    void    RawSocketTCP::PerformPromiscuousMode()
+    void    RawSocket::PerformPromiscuousMode()
     {
 
 	struct ifreq ifr;
 	struct packet_mreq mr;
 
 	ifr.ifr_ifindex = 0;
-	strcpy(ifr.ifr_name, "eth0");
+	strcpy(ifr.ifr_name, sInterface.c_str());
 
 	if (ioctl(fd, SIOGIFINDEX, &ifr) < 0)
 	{
@@ -75,13 +75,13 @@ namespace RACsocket
 	}
     }
 
-    int	RawSocketTCP::Bind()
+    int	RawSocket::Bind()
     {
-/*	sockaddr_in addr;
+	sockaddr_in addr;
 
 	if (setsockopt(fd, SOL_SOCKET, SO_BINDTODEVICE, sInterface.c_str(), sInterface.length()) == -1)
 	{
-	    oRawSocketTCPError.SetErrorStateAndLogErrorFromErno(true);
+	    oRawSocketError.SetErrorStateAndLogErrorFromErno(true);
 	    return -1;
 	}
 	bzero(&addr, sizeof(addr));
@@ -90,14 +90,14 @@ namespace RACsocket
 	addr.sin_addr.s_addr = inet_addr(sIp.c_str());
 	if (bind(fd, (struct sockaddr *)&addr, sizeof(addr)) == -1)
 	{
-	    oRawSocketTCPError.SetErrorStateAndLogErrorFromErno(true);
+	    oRawSocketError.SetErrorStateAndLogErrorFromErno(true);
 	    return -1;
-	} */
+	}
 	PerformPromiscuousMode();
 	return 1;
     }
 
-    void    RawSocketTCP::Config()
+    void    RawSocket::Config()
     {
 	std::unique_ptr<jsonConf>   spJsonConf(jsonConf::GetOrCreateInstance());
 
@@ -108,17 +108,17 @@ namespace RACsocket
 	}
 	catch (std::exception &e)
 	{
-	    oRawSocketTCPError.SetErrorStateAndLogOwnError(true, e.what());
+	    oRawSocketError.SetErrorStateAndLogOwnError(true, e.what());
 	}
     }
 
-    void        RawSocketTCP::Error::SetErrorStateAndLogErrorFromErno(bool bErrorFlag)
+    void        RawSocket::Error::SetErrorStateAndLogErrorFromErno(bool bErrorFlag)
     {
 	SetErrorState(bErrorFlag);
 	LogErrorFromErno();
     }
 
-    void	RawSocketTCP::Error::SetErrorStateAndLogOwnError(bool bErrorFlag, const char* pErrMsg)
+    void	RawSocket::Error::SetErrorStateAndLogOwnError(bool bErrorFlag, const char* pErrMsg)
     {
 	SetErrorState(bErrorFlag);
 	LogOwnError(pErrMsg);

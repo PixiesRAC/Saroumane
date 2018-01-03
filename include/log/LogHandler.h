@@ -60,7 +60,6 @@ namespace RAClog
 		}
 	    }
 
-
 	private :
 
 	    static FileLogHandler	*pInstance;

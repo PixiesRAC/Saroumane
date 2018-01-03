@@ -1,9 +1,10 @@
-//#include "PacketData.h"
 #include "RawSocketConsumer.h"
 #include "LogHandler.h"
 #include "DecoderLayer.h"
-//#include "DecodedData.h"
+
 #include <unistd.h>
+
+# define WAITING_OUTPUT_MS 10000
 
 namespace RACconsumer
 {
@@ -13,7 +14,6 @@ namespace RACconsumer
 	
 	ulRefferedTime = 1000000 * tv.tv_sec + tv.tv_usec;
 	ulActualTime = ulRefferedTime;
-	LOG(INFO, "Consumer RUN, Queue is popping");
     }
 
     RawSocketConsumer::RawSocketConsumer(const RawSocketConsumer& obj)
@@ -23,15 +23,12 @@ namespace RACconsumer
 
     bool RawSocketConsumer::isOutputAvailable() const
     {
-	if ((ulActualTime - ulRefferedTime) >= 1000)
-	{
-	    return true;
-	}
-	return false;
+	return ((ulActualTime - ulRefferedTime) >= WAITING_OUTPUT_MS);
     }
 
     int RawSocketConsumer::ConsumeQueueAndDisplay()
     {
+	LOG(INFO, "Consumer RUN, Queue is popping");
 	while (1)
 	{
 	    if (isOutputAvailable())
@@ -42,5 +39,6 @@ namespace RACconsumer
 	    gettimeofday(&tv,NULL);
 	    ulActualTime = 1000000 * tv.tv_sec + tv.tv_usec;
 	}
+	return 0;
     }
 }

@@ -11,7 +11,7 @@ namespace RACproducer
     {
 	public:
 
-	    RawSocketProducer() {fd = -1;}
+	    RawSocketProducer();
 	    RawSocketProducer(int fd);
 	    RawSocketProducer(const RawSocketProducer&);
 	    ~RawSocketProducer() = default;

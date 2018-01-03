@@ -24,7 +24,7 @@ namespace RACprotocol
 	}
     }
 
-    const std::string	    ProtocolIP::getProtocolFormated() const
+    const std::string	    ProtocolIP::derivedGetProtocolFormated() const
     {
 	std::stringstream   ss;
 
@@ -42,7 +42,7 @@ namespace RACprotocol
 	return ss.str();
     }
 
-    void    ProtocolIP::setStructProtocol(const char *pData)
+    void    ProtocolIP::derivedSetStructProtocol(const char *pData)
     {
 	memcpy(pProtoStruct, pData, sizeof(*pProtoStruct));
     }

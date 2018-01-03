@@ -1,19 +1,35 @@
 #pragma once
 
-#include <boost/format.hpp>
 #include <string>
 
 namespace RACprotocol
 {
-    class IProtocol
-    {
-	public :
+    template <typename T>
+	class IProtocol
+	{
 
-	virtual ~IProtocol() = default;
+	    public :
 
-	using BYTE = char;
+		struct protocol;
 
-	virtual const	std::string	getProtocolFormated() const = 0;
-	virtual	void			setStructProtocol(const char* data) = 0;
-    };
+		IProtocol() = default;
+		~IProtocol() = default;
+
+		using BYTE = char;
+
+		size_t    getStructSize()
+		{
+		    return static_cast<T*>(this)->derivedGetStructSize();
+		}
+
+		void			setStructProtocol(const char* pData)
+		{
+		    return static_cast<T*>(this)->derivedSetStructProtocol(pData);
+		}
+
+		const	std::string	getProtocolFormated() 
+		{
+		    return static_cast<T*>(this)->derivedGetProtocolFormated();
+		}
+	};
 }

@@ -2,7 +2,6 @@
 
 namespace RACsocket
 {
-
     int     ISocket::GetSocketfd()
     {
 	return fd;

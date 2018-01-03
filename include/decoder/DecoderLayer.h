@@ -36,7 +36,6 @@ namespace RACdecoder
 
 	    std::string		sDataDecodeBuffer;
 	    unsigned int	iDecodedSizeBinaryBuffer;
-	    bool		bIsError;
     };
 
     template <>

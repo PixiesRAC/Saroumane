@@ -6,25 +6,28 @@
 
 namespace RACprotocol
 {
-    class	ProtocolIP : public IProtocol
+    class	ProtocolIP : public IProtocol<ProtocolIP>
     {
 	public :
 
+	    ProtocolIP();
+	    ~ProtocolIP();
+
 	    using protocol  = struct ip;
 
-	     protocol   *getStruct() const // must be virtual
-	     {
-		   return pProtoStruct;
-	     }
-
-
-	    ProtocolIP();
-	    virtual ~ProtocolIP() override final;
-
-	    const std::string   getProtocolFormated() const;	
-	    void		setStructProtocol(const char* data);
-
 	private :
+
+	    friend class IProtocol<ProtocolIP>;
+
+	    size_t	getStructSize() const
+	    {
+		return sizeof(protocol);
+	    }
+
+	    void		derivedSetStructProtocol(const char* data);
+
+	    const std::string   derivedGetProtocolFormated() const;	
+
 	    u_char	    getHeaderLength() const;
 	    u_char	    getVersion() const;
 	    u_char	    getTos() const;
@@ -35,7 +38,6 @@ namespace RACprotocol
 	    u_short	    getChecksum() const;
 	    struct  in_addr getSrcIP() const;
 	    struct  in_addr getDestIP() const;
-
 
 	public :
 

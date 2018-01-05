@@ -33,7 +33,7 @@ namespace RACprotocol
     {
 	std::stringstream ss;
 
-	ss << std::endl << "Src MAC:" << getMACFormated(pProtoStruct->uSrcMAC) << std::endl << "Dest MAC:" << getMACFormated(pProtoStruct->uDestMAC) << std::endl << "EtherType: " << getEtherType() << std::endl;
+	ss << std::endl << "Src MAC: " << getMACFormated(pProtoStruct->uSrcMAC) << std::endl << "Dest MAC: " << getMACFormated(pProtoStruct->uDestMAC) << std::endl << "EtherType: " << getEtherType() << std::endl;
 
 	return ss.str();
     }

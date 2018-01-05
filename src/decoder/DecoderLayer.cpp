@@ -21,7 +21,10 @@ namespace RACdecoder
 	    switch (EtherType)
 	    {
 		case  etherType::protocol::IPV4 :
-		   DecodeLayer3<RACprotocol::ProtocolIP>((pData + ProtocolLayer2.getStructSize()));
+		    DecodeLayer3<RACprotocol::ProtocolIP>((pData + ProtocolLayer2.getStructSize()));
+		    break;
+		case  etherType::protocol::ARP :
+		    DecodeLayer3<RACprotocol::ProtocolARP>((pData + ProtocolLayer2.getStructSize()));
 		    break;
 	    }
 	}
@@ -37,8 +40,8 @@ namespace RACdecoder
 	{
 	    T spProtocolLayer3;
 
-	    spProtocolLayer3->setStructProtocol(pData);
-	    sDataDecodeBuffer += spProtocolLayer3->getProtocolFormated();
+	    spProtocolLayer3.setStructProtocol(pData);
+	    sDataDecodeBuffer += spProtocolLayer3.getProtocolFormated();
 	    iDecodedSizeBinaryBuffer = sDataDecodeBuffer.length();
 	}
 
@@ -52,7 +55,7 @@ namespace RACdecoder
 	    iDecodedSizeBinaryBuffer = sDataDecodeBuffer.length();
 	    switch (ProtocolIP.getProtocol())
 	    {
-
+		
 	    }
 	}
 }

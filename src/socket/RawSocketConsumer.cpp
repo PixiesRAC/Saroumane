@@ -4,7 +4,7 @@
 
 #include <unistd.h>
 
-# define WAITING_OUTPUT_MS 10000
+# define WAITING_OUTPUT_MS 100000
 
 namespace RACconsumer
 {
@@ -34,7 +34,7 @@ namespace RACconsumer
 	    if (isOutputAvailable())
 	    {
 		ulRefferedTime = ulActualTime;
-		std::cout << queue.pop();
+		std::cout << queue.pop() << std::endl;
 	    }
 	    gettimeofday(&tv,NULL);
 	    ulActualTime = 1000000 * tv.tv_sec + tv.tv_usec;

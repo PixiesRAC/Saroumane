@@ -60,7 +60,12 @@ namespace RACprotocol
 
     uint16_t ProtocolARP::getHdwType() const
     {
+#if BYTE_ORDER == LITTLE_ENDIAN
 	return __bswap_16(pProtoStruct->uHdwType);
+#endif
+#if BYTE_ORDER == BIG_ENDIAN 
+	return pProtoStruct->uHdwType;
+#endif
     }
 
     uint16_t ProtocolARP::getProtocolType() const
@@ -80,7 +85,12 @@ namespace RACprotocol
 
     uint16_t ProtocolARP::getOpe() const
     {
+#if BYTE_ORDER == LITTLE_ENDIAN
 	return __bswap_16(pProtoStruct->uOpe);
+#endif
+#if BYTE_ORDER == BIG_ENDIAN
+	return pProtoStruct->uOpe;
+#endif
     }
 
     const uint8_t  *      ProtocolARP::getSndrHdwAddr() const

@@ -54,7 +54,7 @@ namespace RACprotocol
     } 
 
     u_char          ProtocolIP::getVersion() const
-    {
+{
 	return pProtoStruct->ip_v;
     }
 

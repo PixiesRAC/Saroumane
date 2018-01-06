@@ -21,32 +21,33 @@ namespace RACdecoder
 	    switch (EtherType)
 	    {
 		case  etherType::protocol::IPV4 :
-		    DecodeLayer3<RACprotocol::ProtocolIP>((pData + ProtocolLayer2.getStructSize()));
+		    DecodeLayer<RACprotocol::ProtocolIP>((pData + ProtocolLayer2.getStructSize()));
 		    break;
 		case  etherType::protocol::ARP :
-		    DecodeLayer3<RACprotocol::ProtocolARP>((pData + ProtocolLayer2.getStructSize()));
+		    DecodeLayer<RACprotocol::ProtocolARP>((pData + ProtocolLayer2.getStructSize()));
 		    break;
 	    }
 	}
 	else
 	{
 	    iDecodedSizeBinaryBuffer = 0;
-	    // We receive the size of the data
+	    // We receive the size of the data, i ignore it
 	}
+	sDataDecodeBuffer += "______________________________________________"; // Best code ever
     }
 
     template <typename T>
-	void	DecoderLayer::DecodeLayer3(const char *pData)
+	void	DecoderLayer::DecodeLayer(const char *pData)
 	{
-	    T spProtocolLayer3;
+	    T spProtocolLayer;
 
-	    spProtocolLayer3.setStructProtocol(pData);
-	    sDataDecodeBuffer += spProtocolLayer3.getProtocolFormated();
+	    spProtocolLayer.setStructProtocol(pData);
+	    sDataDecodeBuffer += spProtocolLayer.getProtocolFormated();
 	    iDecodedSizeBinaryBuffer = sDataDecodeBuffer.length();
 	}
 
     template <>
-	void	DecoderLayer::DecodeLayer3<RACprotocol::ProtocolIP>(const char *pData)
+	void	DecoderLayer::DecodeLayer<RACprotocol::ProtocolIP>(const char *pData)
 	{
 	    RACprotocol::ProtocolIP ProtocolIP;
 
@@ -55,7 +56,15 @@ namespace RACdecoder
 	    iDecodedSizeBinaryBuffer = sDataDecodeBuffer.length();
 	    switch (ProtocolIP.getProtocol())
 	    {
-		
+		case IPv4::protocol::ICMP :
+		    break;
+		case IPv4::protocol::IGMP :
+		    break;
+		case IPv4::protocol::TCP :
+		    DecodeLayer<RACprotocol::ProtocolTCP>((pData + ProtocolIP.getStructSize()));
+		    break;
+		case IPv4::protocol::UDP :
+		    break;
 	    }
 	}
 }

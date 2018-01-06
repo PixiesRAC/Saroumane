@@ -15,16 +15,17 @@ namespace RACprotocol
 
 	    using protocol  = struct ip;
 
-	private :
-
-	    friend class IProtocol<ProtocolIP>;
-
 	    size_t	getStructSize() const
 	    {
 		return sizeof(protocol);
 	    }
 
-	    void		derivedSetStructProtocol(const char* data);
+
+	private :
+
+	    friend class IProtocol<ProtocolIP>;
+
+	    void		derivedSetStructProtocol(const char* pData);
 
 	    const std::string   derivedGetProtocolFormated() const;	
 

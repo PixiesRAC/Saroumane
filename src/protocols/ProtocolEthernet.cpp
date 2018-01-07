@@ -42,7 +42,7 @@ namespace RACprotocol
     {
 	memcpy(pProtoStruct, data, sizeof(*pProtoStruct));
     }
-
+	
     const uint8_t   *ProtocolEthernet::getDestMAC() const
     {
 	return pProtoStruct->uDestMAC;

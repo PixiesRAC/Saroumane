@@ -15,24 +15,20 @@ namespace RACprotocol
 
 	    using protocol  = struct ip;
 
-	    size_t	getStructSize() const
-	    {
-		return sizeof(protocol);
-	    }
-
-
 	private :
 
 	    friend class IProtocol<ProtocolIP>;
 
-	    void		derivedSetStructProtocol(const char* pData);
+	    size_t	derivedGetStructSize() const
+	    {
+		return sizeof(protocol);
+	    }
 
+	    void		derivedSetStructProtocol(const char* pData);
 	    const std::string   derivedGetProtocolFormated() const;	
 
-	    u_char	    getHeaderLength() const;
 	    u_char	    getVersion() const;
 	    u_char	    getTos() const;
-	    short	    getTotalLength() const;
 	    u_short	    getID() const;
 	    short	    getOff() const;
 	    u_char	    getTTL() const;
@@ -42,6 +38,8 @@ namespace RACprotocol
 
 	public :
 
+	    u_char	    getHeaderLength() const;
+	    short	    getTotalLength() const;
 	    u_char	    getProtocol() const;
 
 	    protocol    *pProtoStruct;

@@ -17,7 +17,7 @@ namespace RACprotocol
 
 		using BYTE = char;
 
-		size_t    getStructSize()
+		size_t			getStructSize()
 		{
 		    return static_cast<T*>(this)->derivedGetStructSize();
 		}

@@ -34,7 +34,7 @@ namespace RACconsumer
 	    if (isOutputAvailable())
 	    {
 		ulRefferedTime = ulActualTime;
-		std::cout << queue.pop() << std::endl;
+		std::cout << queue.pop();
 	    }
 	    gettimeofday(&tv,NULL);
 	    ulActualTime = 1000000 * tv.tv_sec + tv.tv_usec;

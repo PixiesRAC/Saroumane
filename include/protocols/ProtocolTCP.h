@@ -15,16 +15,15 @@ namespace RACprotocol
 	    using protocol = struct tcphdr;
 
 	private :
-
+	
 	    friend class IProtocol<ProtocolTCP>;
 
-	    size_t	getStructSize() const
+	    size_t	derivedGetStructSize() const
 	    {
 		return sizeof(protocol);
 	    }
 
 	    void	        derivedSetStructProtocol(const char *pData);
-
 	    const std::string   derivedGetProtocolFormated() const;
 
 	    u_short	getSport() const;

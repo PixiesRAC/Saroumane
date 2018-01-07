@@ -47,14 +47,13 @@ namespace RACprotocol
 	memcpy(pProtoStruct, pData, sizeof(*pProtoStruct));
     }
 
-
     u_char          ProtocolIP::getHeaderLength() const
     {
 	return pProtoStruct->ip_hl * 4;
     } 
 
     u_char          ProtocolIP::getVersion() const
-{
+    {
 	return pProtoStruct->ip_v;
     }
 
@@ -65,12 +64,22 @@ namespace RACprotocol
 
     short           ProtocolIP::getTotalLength() const
     {
-	return pProtoStruct->ip_len - getHeaderLength();
+#if BYTE_ORDER == LITTLE_ENDIAN
+	return  __bswap_16(pProtoStruct->ip_len) - getHeaderLength();
+#endif
+#if BYTE_ORDER == BIG_ENDIAN
+	return  pProtoStruct->ip_len - getHeaderLength(); 
+#endif
     }
 
     u_short         ProtocolIP::getID() const
     {
-	return pProtoStruct->ip_id;
+#if BYTE_ORDER == LITTLE_ENDIAN
+	return  __bswap_16(pProtoStruct->ip_id);
+#endif
+#if BYTE_ORDER == BIG_ENDIAN
+	return  pProtoStruct->ip_id:
+#endif
     }
 
     short           ProtocolIP::getOff() const

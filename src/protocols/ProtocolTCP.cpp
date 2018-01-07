@@ -38,7 +38,7 @@ namespace RACprotocol
 	"Destination port: " << getDport() << std::endl <<
 	"Sequence number: " << getSeq() << std::endl <<
 	"Acknowledgement number: " << getAck() << std::endl <<
-	"Header length: " << (unsigned int)getOff() << std::endl <<
+	"Header length: " << (unsigned short)getOff() << std::endl <<
 	"Flags: " << (unsigned int)getFlags() << std::endl <<
 	"Window size value: " << getWin() << std::endl <<
 	"Checksum : " << getSum() << std::endl;
@@ -88,22 +88,42 @@ namespace RACprotocol
 
     u_char  ProtocolTCP::getFlags() const
     {
+#if BYTE_ORDER == LITTLE_ENDIAN
+	return __bswap_16(pProtoStruct->th_flags);
+#endif
+ #if BYTE_ORDER == BIG_ENDIAN
 	return pProtoStruct->th_flags;
-    }
+#endif
+   }
 
     u_short ProtocolTCP::getWin() const
     {
+#if BYTE_ORDER == LITTLE_ENDIAN
+	return __bswap_16(pProtoStruct->th_win);
+#endif
+ #if BYTE_ORDER == BIG_ENDIAN
 	return pProtoStruct->th_win;
-    }
+#endif
+   }
 
     u_short ProtocolTCP::getSum() const
     {
+#if BYTE_ORDER == LITTLE_ENDIAN
+	return __bswap_16(pProtoStruct->th_sum);
+#endif
+ #if BYTE_ORDER == BIG_ENDIAN
 	return pProtoStruct->th_sum;
-    }
+#endif
+   }
 
     u_short ProtocolTCP::getUrp() const
     {
+#if BYTE_ORDER == LITTLE_ENDIAN
+	return __bswap_16(pProtoStruct->th_urp);
+#endif
+ #if BYTE_ORDER == BIG_ENDIAN
 	return pProtoStruct->th_urp;
-    }
+#endif
+   }
 
 } 

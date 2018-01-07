@@ -87,7 +87,9 @@ set(EXECUTABLE_OUTPUT_PATH bin)
 	    src/protocols/ProtocolEthernet.cpp
 	    src/protocols/ProtocolARP.cpp
 	    src/protocols/ProtocolTCP.cpp
+	    src/protocols/ProtocolUDP.cpp
 	    include/protocols/ProtocolTCP.h
+	    include/protocols/ProtocolUDP.h
 	    include/protocols/ProtocolARP.h
 	    include/protocols/IProtocol.h
 	    include/protocols/ProtocolIP.h

@@ -27,11 +27,15 @@ namespace RACdecoder
 	    template <typename T>
 		void	DecodeLayer(const char* pData);
 
+	    std::string	computeAndGetInHexa(const char *pData, short sSize);
+
 	    std::string		sDataDecodeBuffer;
 	    unsigned int	iDecodedSizeBinaryBuffer;
-    };
+	    short		sDataLengthToBeDecoded;
+};
 
     template <>
 	void    DecoderLayer::DecodeLayer<RACprotocol::ProtocolIP>(const char* pData);
+    template <> // Void for unknown protocol
+	void    DecoderLayer::DecodeLayer<void>(const char* pData);
 }
-

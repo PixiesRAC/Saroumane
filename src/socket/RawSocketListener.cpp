@@ -40,7 +40,7 @@ namespace RAClistener
 	bzero(&buffer, sizeof(buffer));
 
 	iDataRead = recv(fd, buffer, iMaxIpPacketSize, 0);
-	if (iDataRead <= 0)
+	if (iDataRead <= 0 || iDataRead > iMaxIpPacketSize)
 	{
 	    oRawSocketListenerError.LogErrorFromErno();
 	}

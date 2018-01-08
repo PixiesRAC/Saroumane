@@ -1,15 +1,12 @@
 #pragma once
 
 #include "ISocket.h"
-#include "JsonConfHandler.h"
 #include "ErrorSocket.h"
 
 namespace RACsocket
 {
     class RawSocket : public ISocket
     {
-	using jsonConf = RACconf::JsonConfHandler;
-
 	public:
 
 	RawSocket();

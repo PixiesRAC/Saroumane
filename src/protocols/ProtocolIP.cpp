@@ -29,15 +29,15 @@ namespace RACprotocol
 	std::stringstream   ss;
 
 	ss << "Version: " << (int)getVersion() << std::endl <<
-	"Header Length:" <<  (int)getHeaderLength() << std::endl <<
-	"Total Length:" << (short)getTotalLength() << std::endl <<
-	"Identification:" << (int)getID() << std::endl <<
-	"Fragment Offset:" << getOff() << std::endl <<
-	"Time to live:" << (int)getTTL() << std::endl <<
-	"Protocol:" << (int)getProtocol() << std::endl <<
-	"Header checksum:" << getChecksum() << std::endl <<
-	"Source:" << inet_ntoa(getSrcIP()) << std::endl <<
-	"Destination:" << inet_ntoa(getDestIP()) << std::endl;
+	"Header Length: " <<  (int)getHeaderLength() << std::endl <<
+	"Total Length: " << (short)getTotalLength() << std::endl <<
+	"Identification: " << (int)getID() << std::endl <<
+	"Fragment Offset: " << getOff() << std::endl <<
+	"Time to live: " << (int)getTTL() << std::endl <<
+	"Protocol: " << (int)getProtocol() << std::endl <<
+	"Header checksum: " << getChecksum() << std::endl <<
+	"Source IP: " << inet_ntoa(getSrcIP()) << std::endl <<
+	"Destination IP: " << inet_ntoa(getDestIP()) << std::endl;
 
 	return ss.str();
     }

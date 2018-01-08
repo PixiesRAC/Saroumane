@@ -4,5 +4,12 @@
 	    "port" : 4242,
 	    "ip" : "192.168.254.128",
 	    "interface": "eth0"
+	},
+
+	"filter" :
+	{
+	    "protocol" : "",
+	    "ip" : "",
+	    "port" : "port: 4242"
 	}
 }

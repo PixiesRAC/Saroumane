@@ -1,6 +1,6 @@
 #include "LogHandler.h"
 #include "RawSocket.h"
-#include "JsonConfInstanceInitializer.h"
+#include "JsonConfHandler.h"
 
 #include <net/ethernet.h>
 #include <sys/types.h>
@@ -99,12 +99,10 @@ namespace RACsocket
 
     void    RawSocket::Config()
     {
-	std::unique_ptr<jsonConf>   spJsonConf(jsonConf::GetOrCreateInstance());
-
 	try{
-	    iPort = spJsonConf->GetValueFromConfigFile<int>("sniffer.port");
-	    sIp = spJsonConf->GetValueFromConfigFile<std::string>("sniffer.ip", "127.0.0.1");
-	    sInterface = spJsonConf->GetValueFromConfigFile<std::string>("sniffer.interface", "lo");
+	    iPort = RACconf::JsonConfHandler::GetValueFromConfigFile<int>("sniffer.port");
+	    sIp = RACconf::JsonConfHandler::GetValueFromConfigFile<std::string>("sniffer.ip", "127.0.0.1");
+	    sInterface = RACconf::JsonConfHandler::GetValueFromConfigFile<std::string>("sniffer.interface", "lo");
 	}
 	catch (std::exception &e)
 	{

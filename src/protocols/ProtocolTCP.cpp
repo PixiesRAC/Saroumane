@@ -10,7 +10,7 @@
 namespace RACprotocol
 {
 
-    ProtocolTCP::ProtocolTCP()
+    ProtocolTCP::ProtocolTCP() : pProtoStruct(nullptr)
     {
 	pProtoStruct = new protocol;
 	bzero(pProtoStruct, sizeof(protocol));

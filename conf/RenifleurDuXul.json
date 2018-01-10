@@ -8,8 +8,16 @@
 
 	"filter" :
 	{
-	    "protocol" : "",
+	    "protocol" : "ARP",
 	    "ip" : "",
-	    "port" : "port: 4242"
+	    "port" : ""
+	},
+	"hackerDuXul" :
+	{
+	    "attack_type" : 0
+	},
+	"arp_spoof" :
+	{
+
 	}
 }

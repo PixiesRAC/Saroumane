@@ -1,0 +1,17 @@
+#include "IHackerAttack.h"
+#include "HackerARP.h"
+
+#include <iostream>
+
+namespace RAChacker
+{
+    void    HackerARP::launchAttack()
+    {
+	std::cout << "HACKERARP LAUNCH ATTACK" << std::endl;
+    }
+
+    void    HackerARP::makingAttack()
+    {
+	//ethernetLayer.
+    }
+}

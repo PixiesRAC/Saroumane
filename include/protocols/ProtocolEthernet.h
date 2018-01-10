@@ -63,6 +63,10 @@ namespace RACprotocol
 	    const uint8_t	*getSrcMAC() const;
 	    uint16_t		getEtherType() const;
 
+	    void		setDestMAC(const uint8_t *pDestMAC);
+	    void		setSrcMAC(const uint8_t *pSrcMAC);
+	    void		setEtherType(const uint8_t *pEtherType);
+
 	private :
 
 	    std::string	    getMACFormated(const uint8_t *) const;

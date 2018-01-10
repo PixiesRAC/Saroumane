@@ -56,5 +56,21 @@ namespace RACprotocol
     uint16_t   ProtocolEthernet::getEtherType() const
     {
 	return ( pProtoStruct->uEtherType[0] << 8 |  pProtoStruct->uEtherType[1]);
-    } 
-}
+    }
+
+    void    ProtocolEthernet::setDestMAC(const uint8_t *pDestMAC)
+    {
+	memcpy(pProtoStruct->uDestMAC, pDestMAC, sizeof(pProtoStruct->uDestMAC));
+    }
+
+    void    ProtocolEthernet::setSrcMAC(const uint8_t *pSrcMAC)
+    {
+	memcpy(pProtoStruct->uSrcMAC, pSrcMAC, sizeof(pProtoStruct->uSrcMAC));
+    }
+
+    void    ProtocolEthernet::setEtherType(const uint8_t *pEtherType)
+    {
+	memcpy(pProtoStruct->uEtherType, pEtherType, sizeof(pProtoStruct->uEtherType));
+    }
+
+  }

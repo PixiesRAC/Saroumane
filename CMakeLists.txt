@@ -60,6 +60,7 @@ set(INCLUDE_ERROR_DIRECTORY "include/error/")
 set(INCLUDE_PROTOCOLS_DIRECTORY "include/protocols/")
 set(INCLUDE_DECODER_DIRECTORY "include/decoder/")
 set(INCLUDE_TS_DIRECTORY "include/thread_safe/")
+set(INCLUDE_HACK_DIRECTORY "include/hacker/")
 set(EXECUTABLE_OUTPUT_PATH bin)
 
     add_executable(
@@ -113,6 +114,14 @@ set(EXECUTABLE_OUTPUT_PATH bin)
 	    include/decoder/DecoderLayer.h
 
 	    include/thread_safe/TSqueue.h
+
+	    src/hacker/HackerDuXul.cpp
+	    src/hacker/HackerARP.cpp
+	    include/hacker/HackerDuXul.h
+	    include/hacker/HackerARP.h
+	    include/hacker/IHackerAttack.h
+	    include/hacker/AttacksDefinition.h
+	    include/hacker/AttacksHeader.h
 	    )
 
 TARGET_LINK_LIBRARIES( RAC_RenifleurDuXul
@@ -121,7 +130,7 @@ pthread
 include_directories(${INCLUDE_LOG_DIRECTORY} ${gtest_SOURCE_DIR} ${INCLUDE_TIME_DIRECTORY} 
 		    ${INCLUDE_SOCKET_DIRECTORY} ${INCLUDE_CONF_DIRECTORY} ${INCLUDE_JSONBOOST_DIR} 
 		    ${INCLUDE_ERROR_DIRECTORY} ${INCLUDE_PROTOCOLS_DIRECTORY}
-		    ${INCLUDE_DECODER_DIRECTORY} ${INCLUDE_TS_DIRECTORY})
+		    ${INCLUDE_DECODER_DIRECTORY} ${INCLUDE_TS_DIRECTORY} ${INCLUDE_HACK_DIRECTORY})
 
 
 

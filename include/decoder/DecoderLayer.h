@@ -5,8 +5,8 @@
 #include <iostream>
 #include <tuple>
 
-#define  MINIMAL_TRAME_SIZE 40
-#define	 ETHERTYPE_MINIMAL (unsigned int)1500
+#define	MINIMAL_TRAME_SIZE 40
+#define	ETHERTYPE_MINIMAL (unsigned int)1500
 
 namespace RACdecoder
 {

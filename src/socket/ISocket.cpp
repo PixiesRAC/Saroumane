@@ -2,7 +2,7 @@
 
 namespace RACsocket
 {
-    int     ISocket::GetSocketfd()
+    int     ISocket::GetSocketfd() const
     {
 	return fd;
     }

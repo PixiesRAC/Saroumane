@@ -26,7 +26,6 @@ namespace etherType
 	    };
 	}
     }
-
     namespace service
     {
 	namespace priority

@@ -17,12 +17,13 @@ namespace RACprotocol
 
 		using BYTE = char;
 
-		size_t			getStructSize()
+
+		size_t	getStructSize()
 		{
 		    return static_cast<T*>(this)->derivedGetStructSize();
 		}
 
-		void			setStructProtocol(const char* pData)
+		void	setStructProtocol(const char* pData)
 		{
 		    return static_cast<T*>(this)->derivedSetStructProtocol(pData);
 		}

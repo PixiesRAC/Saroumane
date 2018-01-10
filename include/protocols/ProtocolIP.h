@@ -24,6 +24,7 @@ namespace RACprotocol
 		return sizeof(protocol);
 	    }
 
+
 	    void		derivedSetStructProtocol(const char* pData);
 	    const std::string   derivedGetProtocolFormated() const;	
 

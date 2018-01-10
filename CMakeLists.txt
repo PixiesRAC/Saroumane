@@ -96,7 +96,6 @@ set(EXECUTABLE_OUTPUT_PATH bin)
 	    include/protocols/ProtocolsDefinition.h
 	    include/protocols/ProtocolEthernet.h
 	    include/protocols/ProtocolsHeader.h
-
 	    src/decoder/DecoderLayer.cpp
 	    include/decoder/DecoderLayer.h
 

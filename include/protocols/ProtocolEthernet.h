@@ -1,13 +1,11 @@
 #pragma once
 
+#include "IProtocol.h"
+#include "ProtocolsDefinition.h"
 #include <string.h>
 #include <sstream>
 #include <iomanip>
 #include <stdint.h>
-#include "IProtocol.h"
-#include "ProtocolsDefinition.h"
-
-#include <iostream>
 
 namespace RACprotocol
 {

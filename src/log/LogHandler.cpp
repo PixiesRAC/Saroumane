@@ -38,6 +38,7 @@ namespace RAClog
 	    try
 	    {
 		oFileStream.exceptions(oFileStream.failbit);
+		LOG(INFO, "File Log Created");
 	    }
 	    catch (const std::ios_base::failure& e)
 	    {
@@ -46,7 +47,6 @@ namespace RAClog
 		FileLogHandler::DeleteInstance();
 	    }
 
-	    LOG(INFO, "File Log Created");
 	}
     }
 

@@ -21,3 +21,9 @@ fi
 if [ ! -d "../third_party/property_tree" ];then
 git clone https://github.com/boostorg/property_tree.git
 fi
+
+
+if [ ! -d "../third_party/format" ];then
+git clone https://github.com/boostorg/format.git
+fi
+

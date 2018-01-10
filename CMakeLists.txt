@@ -46,7 +46,9 @@ set(INCLUDE_TIME_DIRECTORY "include/time/")
 set(INCLUDE_SOCKET_DIRECTORY "include/socket/")
 set(INCLUDE_CONF_DIRECTORY "include/conf/")
 set(INCLUDE_ERROR_DIRECTORY "include/error/")
-set(INCLUDE_DATA_DIRECTORY "include/data/")
+set(INCLUDE_PROTOCOLS_DIRECTORY "include/protocols/")
+set(INCLUDE_DECODER_DIRECTORY "include/decoder/")
+set(INCLUDE_TS_DIRECTORY "include/thread_safe/")
 set(EXECUTABLE_OUTPUT_PATH bin)
 
     add_executable(
@@ -61,10 +63,10 @@ set(EXECUTABLE_OUTPUT_PATH bin)
 
 	    include/time/TimeHandler.h
 
-	    src/socket/RawSocketTCP.cpp
+	    src/socket/RawSocket.cpp
 	    src/socket/ISocket.cpp
 	    include/socket/ISocket.h
-	    include/socket/RawSocketTCP.h
+	    include/socket/RawSocket.h
 
 	    src/conf/JsonConfHandler.cpp
 	    include/conf/JsonConfHandler.h
@@ -78,18 +80,31 @@ set(EXECUTABLE_OUTPUT_PATH bin)
 	    src/error/ErrorSocket.cpp
 	    include/error/ErrorSocket.h
 
-	    include/data/PacketData.h
-	    include/data/RawDataInstanceInitializer.h
-
-	    include/socket/RawSocketConsumer.h
 	    src/socket/RawSocketConsumer.cpp
+	    include/socket/RawSocketConsumer.h
 
+	    src/protocols/ProtocolIP.cpp
+	    src/protocols/ProtocolEthernet.cpp
+	    include/protocols/IProtocol.h
+	    include/protocols/ProtocolIP.h
+	    include/protocols/ProtocolsDefinition.h
+	    include/protocols/ProtocolEthernet.h
+	    include/protocols/ProtocolsHeader.h
+
+	    src/decoder/DecoderLayer.cpp
+	    include/decoder/DecoderLayer.h
+
+	    include/thread_safe/TSqueue.h
 	    )
 
 TARGET_LINK_LIBRARIES( RAC_RenifleurDuXul
 pthread
 )
 include_directories(${INCLUDE_LOG_DIRECTORY} ${gtest_SOURCE_DIR} ${INCLUDE_TIME_DIRECTORY} 
-		    ${INCLUDE_SOCKET_DIRECTORY} ${INCLUDE_CONF_DIRECTORY} ${INCLUDE_JSONBOOST_DIR} ${INCLUDE_ERROR_DIRECTORY} ${INCLUDE_DATA_DIRECTORY} )
+		    ${INCLUDE_SOCKET_DIRECTORY} ${INCLUDE_CONF_DIRECTORY} ${INCLUDE_JSONBOOST_DIR} 
+		    ${INCLUDE_ERROR_DIRECTORY} ${INCLUDE_PROTOCOLS_DIRECTORY}
+		    ${INCLUDE_DECODER_DIRECTORY} ${INCLUDE_TS_DIRECTORY})
+
+
 
 

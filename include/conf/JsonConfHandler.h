@@ -37,13 +37,10 @@ namespace RACconf
 		    return oRoot.get<T>(pJsonBalise, optionnalValue);
 		}
 
-
 	    private :
 
 	    const char* pJsonPathFilename = "conf/RenifleurDuXul.json";
 	    boost::property_tree::ptree oRoot;
-
 	    static  JsonConfHandler *pInstance; 
     };
-
 }

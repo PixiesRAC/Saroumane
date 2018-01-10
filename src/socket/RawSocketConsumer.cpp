@@ -1,31 +1,44 @@
-#include "PacketData.h"
 #include "RawSocketConsumer.h"
-#include "PacketData.h"
 #include "LogHandler.h"
+#include "DecoderLayer.h"
+
 #include <unistd.h>
+
+# define WAITING_OUTPUT_MS 10000
 
 namespace RACconsumer
 {
     RawSocketConsumer::RawSocketConsumer()
     {
-	LOG(INFO, "Consumer RUN, Queue is popping");
+	gettimeofday(&tv,NULL);
+	
+	ulRefferedTime = 1000000 * tv.tv_sec + tv.tv_usec;
+	ulActualTime = ulRefferedTime;
     }
 
-    int RawSocketConsumer::ConsumeQueueAndDecode()
+    RawSocketConsumer::RawSocketConsumer(const RawSocketConsumer& obj)
     {
+	ulRefferedTime = obj.ulRefferedTime;
+    }
+
+    bool RawSocketConsumer::isOutputAvailable() const
+    {
+	return ((ulActualTime - ulRefferedTime) >= WAITING_OUTPUT_MS);
+    }
+
+    int RawSocketConsumer::ConsumeQueueAndDisplay()
+    {
+	LOG(INFO, "Consumer RUN, Queue is popping");
 	while (1)
 	{
-	    std::lock_guard<std::mutex> lock(RACdata::RawData::oMutex);
-	    if (!RACdata::RawData::qData.empty())
+	    if (isOutputAvailable())
 	    {
-		DecodeRawData(RACdata::RawData::qData.front());
+		ulRefferedTime = ulActualTime;
+		std::cout << queue.pop() << std::endl;
 	    }
+	    gettimeofday(&tv,NULL);
+	    ulActualTime = 1000000 * tv.tv_sec + tv.tv_usec;
 	}
+	return 0;
     }
-
-    int RawSocketConsumer::DecodeRawData(std::tuple<const char*, int> *oData)
-    {
-	RACdata::RawData::qData.pop();
-    }
-
 }

@@ -1,4 +1,3 @@
-
 #include <errno.h>
 #include <string.h>
 #include "ErrorSocket.h"
@@ -6,6 +5,11 @@
 
 namespace RACerror
 {
+    ErrorSocket::ErrorSocket()
+    {
+	bErr = false;
+    }
+
     const char  *ErrorSocket::GetErrorFromErno() const
     {
 	return  strerror(errno);

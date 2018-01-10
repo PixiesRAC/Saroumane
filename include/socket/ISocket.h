@@ -17,6 +17,6 @@ namespace RACsocket
 	public:
 
 	    virtual int	Bind() = 0;
-	    int	    GetSocketfd(); 
+	    int	    GetSocketfd() const; 
     };
 }

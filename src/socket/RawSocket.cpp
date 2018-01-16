@@ -22,6 +22,10 @@ namespace RACsocket
     {
 	Config();
 	CreateSocket(); 
+	if (bPromisc)
+	{
+	    PerformPromiscuousMode();
+	}
 	if (!oRawSocketError.IsError())
 	{
 	    LOG(INFO, "Raw Socket Tcp Creation : DONE SUCCESS");
@@ -77,23 +81,24 @@ namespace RACsocket
 
     int	RawSocket::Bind()
     {
-	sockaddr_in addr;
-
-	if (setsockopt(fd, SOL_SOCKET, SO_BINDTODEVICE, sInterface.c_str(), sInterface.length()) == -1)
+	struct sockaddr_ll sll;
+	struct ifreq ifr; bzero(&sll , sizeof(sll));
+	bzero(&ifr , sizeof(ifr)); 
+	strncpy((char *)ifr.ifr_name, sInterface.c_str(), IFNAMSIZ); 
+	//copy device name to ifr 
+	if((ioctl(fd , SIOCGIFINDEX , &ifr)) == -1)
+	{ 
+	    perror("Unable to find interface index");
+	    exit(-1); 
+	}
+	sll.sll_family = AF_PACKET; 
+	sll.sll_ifindex = ifr.ifr_ifindex; 
+	sll.sll_protocol = htons(0x0800); 
+	if((bind(fd, (struct sockaddr *)&sll , sizeof(sll))) ==-1)
 	{
 	    oRawSocketError.SetErrorStateAndLogErrorFromErno(true);
 	    return -1;
 	}
-	bzero(&addr, sizeof(addr));
-	addr.sin_family = AF_INET;
-	addr.sin_port = htons(iPort);
-	addr.sin_addr.s_addr = inet_addr(sIp.c_str());
-	if (bind(fd, (struct sockaddr *)&addr, sizeof(addr)) == -1)
-	{
-	    oRawSocketError.SetErrorStateAndLogErrorFromErno(true);
-	    return -1;
-	}
-	PerformPromiscuousMode();
 	return 1;
     }
 
@@ -103,6 +108,7 @@ namespace RACsocket
 	    iPort = RACconf::JsonConfHandler::GetValueFromConfigFile<int>("sniffer.port");
 	    sIp = RACconf::JsonConfHandler::GetValueFromConfigFile<std::string>("sniffer.ip", "127.0.0.1");
 	    sInterface = RACconf::JsonConfHandler::GetValueFromConfigFile<std::string>("sniffer.interface", "lo");
+	    bPromisc = RACconf::JsonConfHandler::GetValueFromConfigFile<bool>("sniffer.promisc", false);
 	}
 	catch (std::exception &e)
 	{

@@ -29,8 +29,8 @@ namespace RAChacker
 	}
     }
 
-  void  HackerDuXul::iWantToFuckSomeMother()
+  void  HackerDuXul::iWantToFuckSomeMother(int socket)
   {
-      pAttack->launchAttack();
+      pAttack->launchAttack(socket);
   }
 }

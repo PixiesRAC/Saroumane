@@ -51,9 +51,10 @@ namespace RACprotocol
 	"Protocol size: " << getProtocolAddrLength() << std::endl <<
 	"Opcode : " << getOpe() << std::endl << 
 	"Sender MAC address: " << getMACFormated(getSndrHdwAddr()) << std::endl <<
-	"Sender IP address: " << inet_ntoa(getSndrInternetAddr()) << std::endl <<
-	"Target MAC address: " << getMACFormated(getTgtHdwAddr()) << std::endl <<
-	"Target IP address: " << inet_ntoa(getTgtInternetAddr())  << std::endl;
+	"Sender IP address: " << inet_ntoa((*(struct in_addr*)&pProtoStruct->uSndrInternetAddr)) << std::endl <<
+	"Target MAC address: " << getMACFormated(getTgtHdwAddr()) << std::endl;
+	// warning lorsque je continue la boucle de "<<" la target ip est egale a la sender ip avec la meme ligne de code
+	ss << "Target IP address: " << inet_ntoa((*(struct in_addr*)&pProtoStruct->uTgtInternetAddr))  << std::endl;
 
 	return ss.str();
     }
@@ -98,9 +99,9 @@ namespace RACprotocol
 	return pProtoStruct->uSndrHdwAddr;	
     }
 
-    struct in_addr      ProtocolARP::getSndrInternetAddr() const
+    uint32_t      ProtocolARP::getSndrInternetAddr() const
     {
-	return pProtoStruct->sSndrInternetAddr;
+	return pProtoStruct->uSndrInternetAddr;
     }
 
     const uint8_t*      ProtocolARP::getTgtHdwAddr() const
@@ -108,8 +109,55 @@ namespace RACprotocol
 	return pProtoStruct->uTgtHdwAddr;
     }
 
-    struct in_addr    ProtocolARP::getTgtInternetAddr() const
+    uint32_t    ProtocolARP::getTgtInternetAddr() const
     {
-	return pProtoStruct->sTgtInternetAddr;
+	return pProtoStruct->uTgtInternetAddr;
     }
+
+    void	ProtocolARP::setHdwType(uint16_t uHdwType)
+    {
+	pProtoStruct->uHdwType = uHdwType;
+    }
+
+    void	ProtocolARP::setProtocolType(uint16_t uProtocolType)
+    {
+	pProtoStruct->uProtocolType = uProtocolType;
+    }
+
+    void	ProtocolARP::setHdwAddrLength(uint8_t uHdwAddrLength)
+    {
+	pProtoStruct->uHdwAddrLength = uHdwAddrLength;
+    }
+    
+    void	ProtocolARP::setProtocolAddrLength(uint8_t uProtocolAddrLength)
+    {
+	pProtoStruct->uProtocolAddrLength = uProtocolAddrLength;
+    }
+
+    void	ProtocolARP::setOpe(uint16_t uOpe)
+    {
+	pProtoStruct->uOpe = uOpe;
+    }
+
+    void	ProtocolARP::setSndrHdwAddr(const uint8_t* uSndrHdwAddr)
+    {
+	memcpy(pProtoStruct->uSndrHdwAddr, uSndrHdwAddr, sizeof(pProtoStruct->uSndrHdwAddr));
+    }
+
+    void	ProtocolARP::setSndrInternetAddr(uint32_t uSndrInternetAddr)
+    {
+
+	pProtoStruct->uSndrInternetAddr = uSndrInternetAddr;
+    }
+
+    void	ProtocolARP::setTgtHdwAddr(const uint8_t* uTgtHdwAddr)
+    {
+	 memcpy(pProtoStruct->uTgtHdwAddr, uTgtHdwAddr, sizeof(pProtoStruct->uTgtHdwAddr));
+    }
+
+    void	ProtocolARP::setTgtInternetAddr(uint32_t uTgtInternetAddr)
+    {
+	pProtoStruct->uTgtInternetAddr = uTgtInternetAddr;
+    }
+
 }

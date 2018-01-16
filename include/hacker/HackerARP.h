@@ -2,6 +2,7 @@
 
 #include "IHackerAttack.h"
 #include "ProtocolARP.h"
+#include <string>
 
 namespace RAChacker
 {
@@ -14,13 +15,19 @@ namespace RAChacker
 
 	public :
 
-	virtual void	launchAttack() override final;
+	virtual void	launchAttack(int socket) override final;
 
 	private :
 	
 	virtual void	makingAttack() override final;
 
 	RACprotocol::ProtocolARP   ARPlayer;
-
+	
+	std::string	targetIP;
+	std::string	hostIP;
+	bool		bBothSide;
+	bool		bDos;
+	char		cPacket[256];	
+	size_t		uPacketSize;
     };
 }

@@ -117,6 +117,7 @@ set(EXECUTABLE_OUTPUT_PATH bin)
 
 	    src/hacker/HackerDuXul.cpp
 	    src/hacker/HackerARP.cpp
+	    src/hacker/IHackerAttack.cpp
 	    include/hacker/HackerDuXul.h
 	    include/hacker/HackerARP.h
 	    include/hacker/IHackerAttack.h

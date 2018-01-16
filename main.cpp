@@ -36,7 +36,7 @@ int main(int argc, char **argv)
 		LOG(INFO, "Mode attack encoder");
 		{
 		    RAChacker::HackerDuXul hacker;
-		    hacker.iWantToFuckSomeMother();
+		    hacker.iWantToFuckSomeMother(spSocket->GetSocketfd());
 		    return 0;
 		}
 	    case 's' :

@@ -39,5 +39,6 @@ namespace RACsocket
 	int				iPort;
 	std::string			sIp;
 	std::string			sInterface;
+	bool				bPromisc;
     };
 }

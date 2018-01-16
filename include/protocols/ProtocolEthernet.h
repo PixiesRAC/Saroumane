@@ -59,6 +59,11 @@ namespace RACprotocol
 
 	public :
 
+	    mytype		*getProtocol() const
+	    {
+		return pProtoStruct;
+	    }
+
 	    const uint8_t	*getDestMAC() const;
 	    const uint8_t	*getSrcMAC() const;
 	    uint16_t		getEtherType() const;

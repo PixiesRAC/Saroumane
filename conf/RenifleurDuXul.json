@@ -2,8 +2,9 @@
 	"sniffer" :
 	{
 	    "port" : 4242,
-	    "ip" : "192.168.254.128",
-	    "interface": "eth0"
+	    "ip" : "192.168.0.24",
+	    "interface": "eth0",
+	    "promisc": false
 	},
 
 	"filter" :
@@ -14,10 +15,15 @@
 	},
 	"hackerDuXul" :
 	{
-	    "attack_type" : 0
+	    "attack_type" : 0,
+	    "interface" : "eth0",
+	    "ip_Dest" : "192.168.0.28"
 	},
 	"arp_spoof" :
 	{
-
+	    "target" : "192.168.0.28",
+	    "host" : "192.168.0.1",
+	    "both" : false,
+	    "dos" : false
 	}
 }

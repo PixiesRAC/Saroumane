@@ -11,7 +11,7 @@ namespace RAChacker
 	    HackerDuXul();
 	    ~HackerDuXul();
 
-	    void    iWantToFuckSomeMother();
+	    void    iWantToFuckSomeMother(int socket);
 
 	private :
 

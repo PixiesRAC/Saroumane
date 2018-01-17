@@ -15,8 +15,8 @@ namespace RACfilter
 	public :
 
 	~FilterOutput();
-
 	static FilterOutput *GetOrCreateInstance()
+
 	{
 	    if (pInstance == nullptr)
 	    {
@@ -39,6 +39,8 @@ namespace RACfilter
 	       }
 	}
 	
+	private :
+
 	static std::vector<std::string> filterKeywords;
 	static FilterOutput		*pInstance;
     };

@@ -1,6 +1,7 @@
 #include "IHackerAttack.h"
 #include "JsonConfHandler.h"
 #include "HackerUtils.h"
+#include "LogHandler.h"
 
 namespace RAChacker
 {
@@ -9,16 +10,24 @@ namespace RAChacker
     	IPDest = RACconf::JsonConfHandler::GetValueFromConfigFile<std::string>("hackerDuXul.ip_Dest");	
 	interface =  RACconf::JsonConfHandler::GetValueFromConfigFile<std::string>("hackerDuXul.interface", "eth0");
 
-	// To know if we can access to this ip
-	std::string ping;	
-	ping = "ping -c1 " + IPDest;
-	system(ping.c_str()); // maybe its more secure to add a script file which will do this
+	bzero(uMacDest, sizeof(uMacDest));
+	bzero(uMacSrc, sizeof(uMacSrc));
+	makingAttack();
+ }
 
-	HackerUtils::computeMacFromLocalIP(IPDest, uMacDest);
-	HackerUtils::computeOwnMac(uMacSrc, interface);
-	IPSrc = HackerUtils::getLocalIP(interface);
+ void	IHackerAttack::makingAttack()
+ {
+     std::string ping;	
+     ping = "ping -c1 " + IPDest;
+     if (system(ping.c_str()) != 0)
+     {
+	LOG(ERROR, "Can't ping " << IPDest);
+     }
 
-	ethernetLayer.setDestMAC(uMacDest);
-	ethernetLayer.setSrcMAC(uMacSrc);
-    }
+     HackerUtils::computeMacFromLocalIP(IPDest, uMacDest);
+     HackerUtils::computeOwnMac(uMacSrc, interface);
+     IPSrc = HackerUtils::getLocalIP(interface);
+     ethernetLayer.setDestMAC(uMacDest);
+     ethernetLayer.setSrcMAC(uMacSrc);
+ }
 }

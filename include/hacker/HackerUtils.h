@@ -1,12 +1,11 @@
 #pragma once
 
+#include "LogHandler.h"
+
+#include <unistd.h>
 #include <fstream>
 #include <utility>
 #include <tuple>
-#include "LogHandler.h"
-
-
-#include <unistd.h>
 #include <sys/types.h>
 #include <ifaddrs.h>
 #include <sys/socket.h>
@@ -17,8 +16,8 @@ namespace RAChacker
 {
     class HackerUtils
     {
-	static constexpr char*  pArpCachePath = "/proc/net/arp";
-	static constexpr char*	pMACPath = "/sys/class/net/";
+	static constexpr const char*	pArpCachePath = "/proc/net/arp";
+	static constexpr const char*	pMACPath = "/sys/class/net/";
 
 	static void convertMacToBytes(const char *pMacSrc, uint8_t *pMacDst)
 	{
@@ -48,7 +47,7 @@ namespace RAChacker
 
 		while (!std::getline(fs, buffer).eof())
 		{
-		    sscanf(buffer.c_str(), "%s 0x%x 0x%x %s %100s %100s\n", ipFromArpCache, useless, useless, mac, useless, useless);
+		    sscanf(buffer.c_str(), "%s 0x%c 0x%c %s %100s %100s\n", ipFromArpCache, useless, useless, mac, useless, useless);
 		    if (ip == ipFromArpCache)
 		    {
 			convertMacToBytes(mac, uMac);
@@ -75,7 +74,6 @@ namespace RAChacker
 
 	static	void	    computeOwnMac(uint8_t *pMacSrc, const std::string &interface = "eth0")
 	{
-	    uint8_t	    aMac[6];
 	    std::string	    macPath;
 
 	    macPath = pMACPath + interface + "/address";
@@ -100,9 +98,9 @@ namespace RAChacker
 	    struct		    sockaddr_in *sa;
 	    std::string		    addr;
 	
-
 	    getifaddrs (&ifap);
 	    ifa = ifap;
+
 	    while (ifap)
 	    {
 		if (ifap->ifa_addr && ifap->ifa_addr->sa_family == AF_INET) 
@@ -110,7 +108,6 @@ namespace RAChacker
 		    if (interface == ifap->ifa_name)
 		    {
 			sa = (struct sockaddr_in *) ifap->ifa_addr;
-			//addr = inet_network(inet_ntoa(sa->sin_addr));
 			addr = inet_ntoa(sa->sin_addr);
 			break;
 		    }
@@ -119,6 +116,29 @@ namespace RAChacker
 	    }
 	    freeifaddrs(ifa);
 	    return addr;
+	}
+
+	template <typename lambda>
+	static	void	loopHandlerAttackTimer(lambda fct, unsigned int ms = 5000000)
+	{
+	    unsigned long                                           ulRefferedTime;
+	    unsigned long                                           ulActualTime;
+	    struct timeval                                          tv;
+
+	    gettimeofday(&tv,NULL);
+	    ulRefferedTime = 1000000 * tv.tv_sec + tv.tv_usec;
+	    ulActualTime = ulRefferedTime;
+	    while (1)
+	    {
+		if ((ulActualTime - ulRefferedTime) >= ms)
+		{
+		    ulRefferedTime = ulActualTime;
+		    LOG(INFO, "ATTACK SENT");
+		    fct();
+		}
+		gettimeofday(&tv,NULL);
+                ulActualTime = 1000000 * tv.tv_sec + tv.tv_usec;
+	    }
 	}
     };
 }

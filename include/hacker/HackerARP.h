@@ -21,6 +21,8 @@ namespace RAChacker
 	
 	virtual void	makingAttack() override final;
 
+	protected :
+
 	RACprotocol::ProtocolARP   ARPlayer;
 	
 	std::string	targetIP;

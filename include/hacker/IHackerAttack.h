@@ -1,7 +1,9 @@
 #pragma once
 
 #include "ProtocolEthernet.h"
-#include <tuple>
+
+#include <net/if.h>
+#include <linux/if_packet.h>
 
 namespace RAChacker
 {
@@ -16,13 +18,17 @@ namespace RAChacker
 
 	protected :
 
-	virtual void	makingAttack() = 0;
+	virtual void	makingAttack();
 
 	RACprotocol::ProtocolEthernet		    ethernetLayer;
+
 	std::string				    IPDest;
 	std::string				    IPSrc;
 	uint8_t					    uMacDest[6];
 	uint8_t					    uMacSrc[6];
 	std::string				    interface;
+
+	struct sockaddr_ll			    sll;
+	struct ifreq				    ifr;
     };
 }

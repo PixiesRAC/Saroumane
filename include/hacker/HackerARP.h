@@ -29,7 +29,7 @@ namespace RAChacker
 	std::string	hostIP;
 	bool		bBothSide;
 	bool		bDos;
-	char		cPacket[256];	
+	char		cPacket[IP_RANGE][256];	
 	size_t		uPacketSize;
     };
 }

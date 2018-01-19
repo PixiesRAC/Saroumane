@@ -12,6 +12,8 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
+#define IP_RANGE 254
+
 namespace RAChacker
 {
     class HackerUtils

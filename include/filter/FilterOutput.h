@@ -27,7 +27,10 @@ namespace RACfilter
 
 	static const std::string  computeAndGetUsefullData(const std::string &data)
 	{
-
+	      if (filterKeywords.empty())
+	      {
+		  return data;
+	      }
 	      if (std::any_of(filterKeywords.begin(), filterKeywords.end(),
 		  [&](const std::string& str){return data.find(str) != std::string::npos;}))
 	       {

@@ -2,7 +2,7 @@
 	"sniffer" :
 	{
 	    "port" : 4242,
-	    "ip" : "192.168.0.24",
+	    "ip" : "192.168.228.4454",
 	    "interface": "eth0",
 	    "promisc": false
 	},
@@ -17,13 +17,13 @@
 	{
 	    "attack_type" : 0,
 	    "interface" : "eth0",
-	    "ip_Dest" : "192.168.0.28"
+	    "ip_Dest" : "192.168.228.2"
 	},
 	"arp_spoof" :
 	{
-	    "target" : "192.168.0.28",
-	    "host" : "192.168.0.1",
-	    "both" : false,
+	    "target" : "192.168.228.2",
+	    "host" : "192.168.228.1",
+	    "both" : true,
 	    "dos" : false
 	}
 }

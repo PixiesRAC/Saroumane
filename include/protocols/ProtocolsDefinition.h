@@ -12,6 +12,20 @@ namespace etherType
 	    ARP = 0x0806
 	};
     }
+}
+    namespace IPv4
+    {
+	namespace protocol
+	{
+	    enum value
+	    {
+		ICMP = 1,
+		IGMP = 2,
+		TCP = 6,
+		UDP = 17
+	    };
+	}
+    }
     namespace service
     {
 	namespace priority
@@ -65,4 +79,3 @@ namespace etherType
 	    };
 	}
     }
-}

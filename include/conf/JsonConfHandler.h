@@ -27,12 +27,12 @@ namespace RACconf
 	    }
 
 	    template<typename T>
-		T	GetValueFromConfigFile(const char* pJsonBalise)
+static		T	GetValueFromConfigFile(const char* pJsonBalise)
 		{
 		    return oRoot.get<T>(pJsonBalise);
 		}
 	    template<typename T>
-		T   GetValueFromConfigFile(const char* pJsonBalise, T optionnalValue)
+static		T   GetValueFromConfigFile(const char* pJsonBalise, T optionnalValue)
 		{
 		    return oRoot.get<T>(pJsonBalise, optionnalValue);
 		}
@@ -40,7 +40,7 @@ namespace RACconf
 	    private :
 
 	    const char* pJsonPathFilename = "conf/RenifleurDuXul.json";
-	    boost::property_tree::ptree oRoot;
+	    static boost::property_tree::ptree oRoot;
 	    static  JsonConfHandler *pInstance; 
     };
 }

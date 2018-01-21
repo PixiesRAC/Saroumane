@@ -46,7 +46,6 @@ namespace RAClog
 		    e.what() << std::endl;
 		FileLogHandler::DeleteInstance();
 	    }
-
 	}
     }
 

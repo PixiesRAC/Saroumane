@@ -41,6 +41,17 @@ set(INCLUDE_JSONBOOST_DIR, third_party/property_tree/include/)
 # END Json Boost
 ################################
 
+option(WITH_FILTER "Filter" 1) #FILTER SET VALUE TO 0 TO UNABLE THE FILTER
+
+if(WITH_FILTER)
+      set(INCLUDE_FILTER_DIRECTORY "include/filter/")
+      include_directories(${INCLUDE_FILTER_DIRECTORY})
+      set(filter_src "src/filter/FilterOutput.cpp")
+      add_definitions(-DRAC_FILTER)
+else() 
+      set(filter_src "")
+      endif()
+
 set(INCLUDE_LOG_DIRECTORY "include/log/")
 set(INCLUDE_TIME_DIRECTORY "include/time/")
 set(INCLUDE_SOCKET_DIRECTORY "include/socket/")
@@ -57,6 +68,7 @@ set(EXECUTABLE_OUTPUT_PATH bin)
 
 	    main.cpp
 
+	    ${filter_src}
 	    src/log/LogHandler.cpp
 	    include/log/LogHandler.h
 	    include/log/LogInstanceInitializer.h
@@ -85,12 +97,17 @@ set(EXECUTABLE_OUTPUT_PATH bin)
 
 	    src/protocols/ProtocolIP.cpp
 	    src/protocols/ProtocolEthernet.cpp
+	    src/protocols/ProtocolARP.cpp
+	    src/protocols/ProtocolTCP.cpp
+	    src/protocols/ProtocolUDP.cpp
+	    include/protocols/ProtocolTCP.h
+	    include/protocols/ProtocolUDP.h
+	    include/protocols/ProtocolARP.h
 	    include/protocols/IProtocol.h
 	    include/protocols/ProtocolIP.h
 	    include/protocols/ProtocolsDefinition.h
 	    include/protocols/ProtocolEthernet.h
 	    include/protocols/ProtocolsHeader.h
-
 	    src/decoder/DecoderLayer.cpp
 	    include/decoder/DecoderLayer.h
 

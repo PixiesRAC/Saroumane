@@ -1,11 +1,14 @@
 #pragma once
 
-#include "IProtocol.h"
-#include "ProtocolsDefinition.h"
 #include <string.h>
 #include <sstream>
 #include <iomanip>
 #include <stdint.h>
+
+#include "IProtocol.h"
+#include "ProtocolsDefinition.h"
+
+#include <iostream>
 
 namespace RACprotocol
 {
@@ -28,10 +31,10 @@ namespace RACprotocol
 
 	    struct	    protocol8021Q
 	    {	
-		uint16_t    Priority : 3,
-			    CFI : 1,
-			    VLANID : 12;
-		short	    sEtherType;
+		uint16_t    uPriority : 3,
+			    uCFI : 1,
+			    uVLANID : 12;
+		uint16_t    usEtherType;
 	    };
 
 	    typedef struct protocol mytype;

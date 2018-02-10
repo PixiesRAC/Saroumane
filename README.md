@@ -1,4 +1,4 @@
-# RAC_RenifleurDuXul
+# RAC
 
 Packet sniffer and attack encoder (arp spoof and so on)
 

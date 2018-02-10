@@ -8,7 +8,7 @@
 #include "FilterOutput.h"
 #endif
 
-# define WAITING_OUTPUT_MS 10
+# define WAITING_OUTPUT_MS 10000
 
 namespace RACconsumer
 {

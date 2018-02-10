@@ -13,69 +13,79 @@ namespace etherType
 	};
     }
 }
-    namespace IPv4
+
+namespace IPv4
+{
+    namespace protocol
     {
-	namespace protocol
+	enum value
 	{
-	    enum value
-	    {
-		ICMP = 1,
-		IGMP = 2,
-		TCP = 6,
-		UDP = 17
-	    };
-	}
+	    ICMP = 1,
+	    IGMP = 2,
+	    TCP = 6,
+	    UDP = 17
+	};
     }
-    namespace service
+}
+
+namespace hardwareType
+{
+    enum value : int
     {
-	namespace priority
-	{
-	    enum value
-	    {
-		ROUTINE,
-		PRIORITARY,
-		IMMEDIAT,
-		URGENT,
-		VERY_URGENT,
-		CRITIC,
-		INTER,
-		NETWORK
-	    };
-	}
+	ETHERNET = 1
+    };
+}
 
-	namespace delay
+namespace service
+{
+    namespace priority
+    {
+	enum value
 	{
-	    enum value
-	    {
-		NORMAL,
-		LOW
-	    };
-	}
-	
-	namespace throughput
-	{
-	    enum value
-	    {
-		NORMAL,
-		HIGH
-	    };
-	}
-
-	namespace reliability
-	{
-	    enum value
-	    {
-		NORMAL,
-		HIGH
-	    };
-	}
-
-	namespace cost
-	{
-	    enum value
-	    {
-		NORMAL,
-		LOW
-	    };
-	}
+	    ROUTINE,
+	    PRIORITARY,
+	    IMMEDIAT,
+	    URGENT,
+	    VERY_URGENT,
+	    CRITIC,
+	    INTER,
+	    NETWORK
+	};
     }
+
+    namespace delay
+    {
+	enum value
+	{
+	    NORMAL,
+	    LOW
+	};
+    }
+
+    namespace throughput
+    {
+	enum value
+	{
+	    NORMAL,
+	    HIGH
+	};
+    }
+
+    namespace reliability
+    {
+	enum value
+	{
+	    NORMAL,
+	    HIGH
+	};
+    }
+
+    namespace cost
+    {
+	enum value
+	{
+	    NORMAL,
+	    LOW
+	};
+    }
+}

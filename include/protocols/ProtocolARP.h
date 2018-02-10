@@ -25,9 +25,9 @@ namespace RACprotocol
 	    uint8_t	    uProtocolAddrLength; // in bytes
 	    uint16_t	    uOpe;
 	    uint8_t	    uSndrHdwAddr[6];
-	    struct  in_addr sSndrInternetAddr;
+	    uint32_t	    uSndrInternetAddr;
 	    uint8_t	    uTgtHdwAddr[6];
-	    struct in_addr  sTgtInternetAddr;
+	    uint32_t	    uTgtInternetAddr;
 	};
 
 	typedef struct protocol mytype;
@@ -53,15 +53,34 @@ namespace RACprotocol
 	const std::string   derivedGetProtocolFormated() const;
 
 
+	public :
+
+	mytype		    *getProtocol() const
+	{
+	    return pProtoStruct;
+	}
+
 	uint16_t	    getHdwType() const;
 	uint16_t	    getProtocolType() const;
 	uint8_t		    getHdwAddrLength() const;
 	uint8_t		    getProtocolAddrLength() const;
 	uint16_t	    getOpe() const;
 	const uint8_t*	    getSndrHdwAddr() const;
-	struct in_addr	    getSndrInternetAddr() const;
+	uint32_t    	    getSndrInternetAddr() const;
 	const uint8_t*	    getTgtHdwAddr() const;
-	struct in_addr	    getTgtInternetAddr() const;
+	uint32_t    	    getTgtInternetAddr() const;
+
+	void	    setHdwType(uint16_t);
+	void	    setProtocolType(uint16_t);
+	void	    setHdwAddrLength(uint8_t);
+	void	    setProtocolAddrLength(uint8_t);
+	void	    setOpe(uint16_t);
+	void	    setSndrHdwAddr(const uint8_t*);
+	void	    setSndrInternetAddr(uint32_t );
+	void	    setTgtHdwAddr(const uint8_t*);
+	void	    setTgtInternetAddr(uint32_t);
+
+	private :
 
 	mytype	*pProtoStruct;
     };

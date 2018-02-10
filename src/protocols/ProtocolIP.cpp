@@ -46,7 +46,7 @@ namespace RACprotocol
     {
 	memcpy(pProtoStruct, pData, sizeof(*pProtoStruct));
     }
-
+  
     u_char          ProtocolIP::getHeaderLength() const
     {
 	return pProtoStruct->ip_hl * 4;

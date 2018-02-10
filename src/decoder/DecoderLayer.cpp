@@ -19,7 +19,6 @@ namespace RACdecoder
 	{
 	   sDataDecodeBuffer += ProtocolLayer2.getProtocolFormated();
 	   iDecodedSizeBinaryBuffer = sDataDecodeBuffer.length();
-
 	    switch (EtherType)
 	    {
 		case  etherType::protocol::IPV4 :
@@ -30,7 +29,6 @@ namespace RACdecoder
 		    break;
 		default :
 		    DecodeLayer<void>((pData + ProtocolLayer2.getStructSize()));
-		    
 	    }
 	}
 	else
@@ -65,6 +63,7 @@ namespace RACdecoder
 	    ProtocolIP.setStructProtocol(pData);
 	    sDataDecodeBuffer += ProtocolIP.getProtocolFormated();
 	    iDecodedSizeBinaryBuffer = sDataDecodeBuffer.length();
+      
 	    sDataLengthToBeDecoded = ProtocolIP.getTotalLength();
 	    
 	    switch (ProtocolIP.getProtocol())

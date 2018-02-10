@@ -34,7 +34,6 @@ namespace RACprotocol
 	std::stringstream ss;
 
 	ss << std::endl << "Src MAC: " << getMACFormated(pProtoStruct->uSrcMAC) << std::endl << "Dest MAC: " << getMACFormated(pProtoStruct->uDestMAC) << std::endl << "EtherType: " << getEtherType() << std::endl;
-
 	return ss.str();
     }
 
@@ -42,7 +41,7 @@ namespace RACprotocol
     {
 	memcpy(pProtoStruct, data, sizeof(*pProtoStruct));
     }
-	
+  
     const uint8_t   *ProtocolEthernet::getDestMAC() const
     {
 	return pProtoStruct->uDestMAC;

@@ -14,6 +14,6 @@ again
 
 4: The log file are in log folder
 
-5: You can change the configuration mode in the file RenifleurDuXul.json if the folder conf -for any help, take a look on the file conf.help)
+5: You can change the configuration mode in the file network_conf.json if the folder conf -for any help, take a look on the file conf.help)
 
 

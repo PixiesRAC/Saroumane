@@ -10,7 +10,7 @@ First at all, you should use the script /script/sanityCheck.sh in order to verif
 
 2 bis: (You can desactivate the filter mode in the file cmakeList.txt (replace the value ON by OFF and delete the cmakeCache) then do a cmake ..
 again
-3: YOU HAVE TO RUN THE PROGRAM IN SUDO MODE (sudo ./RacRenifleurDuXul - -e [ENCODER_MODE : ON] -s [SNIFFER_MODE : ON])
+3: YOU HAVE TO RUN THE PROGRAM IN SUDO MODE (sudo ./"BINARY_NAME" - -e [ENCODER_MODE : ON] -s [SNIFFER_MODE : ON])
 
 4: The log file are in log folder
 

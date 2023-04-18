@@ -39,7 +39,7 @@ static		T   GetValueFromConfigFile(const char* pJsonBalise, T optionnalValue)
 
 	    private :
 
-	    const char* pJsonPathFilename = "conf/RenifleurDuXul.json";
+	    const char* pJsonPathFilename = "conf/network_conf.json";
 	    static boost::property_tree::ptree oRoot;
 	    static  JsonConfHandler *pInstance; 
     };
